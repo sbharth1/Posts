@@ -1,0 +1,125 @@
+<section>
+  <div class="container bg-secondary">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <h2 class="text-center my-4">Sign up</h2>
+
+        <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label for="firstName" class="form-label">Full Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="firstName"
+              formControlName="firstName"
+              placeholder="Enter your full name"
+            />
+            <div
+              *ngIf="
+                myForm.get('firstName')?.invalid &&
+                myForm.get('firstName')?.touched
+              "
+              class="text-danger"
+            >
+              <small *ngIf="myForm.get('firstName')?.hasError('required')"
+                >Full Name is required.</small
+              >
+              <small *ngIf="myForm.get('firstName')?.hasError('minlength')"
+                >Full Name must be at least 2 characters long.</small
+              >
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="lastName" class="form-label">User Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="lastName"
+              formControlName="lastName"
+              placeholder="Enter your username"
+            />
+            <div
+              *ngIf="
+                myForm.get('lastName')?.invalid &&
+                myForm.get('lastName')?.touched
+              "
+              class="text-danger"
+            >
+              <small *ngIf="myForm.get('lastName')?.hasError('required')"
+                >User Name is required.</small
+              >
+              <small *ngIf="myForm.get('lastName')?.hasError('minlength')"
+                >User Name must be at least 2 characters long.</small
+              >
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              formControlName="email"
+              placeholder="Enter your email"
+            />
+            <div
+              *ngIf="
+                myForm.get('email')?.invalid && myForm.get('email')?.touched
+              "
+              class="text-danger"
+            >
+              <small *ngIf="myForm.get('email')?.hasError('required')"
+                >Email is required.</small
+              >
+              <small *ngIf="myForm.get('email')?.hasError('email')"
+                >Please enter a valid email address.</small
+              >
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              formControlName="password"
+              placeholder="Enter your password"
+            />
+            <div
+              *ngIf="
+                myForm.get('password')?.invalid &&
+                myForm.get('password')?.touched
+              "
+              class="text-danger"
+            >
+              <small *ngIf="myForm.get('password')?.hasError('required')"
+                >Password is required.</small
+              >
+              <small *ngIf="myForm.get('password')?.hasError('minlength')"
+                >Password must be at least 6 characters long.</small
+              >
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100 mb-3">
+            Sign up
+          </button>
+        </form>
+        <div class="text-center mt-3">
+          <p>
+            You've an account?
+            <a
+              (click)="navigateToLogin()"
+              routerLinkActive="router-link-active"
+            >
+              Login
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
