@@ -28,7 +28,7 @@ export class SignupComponent implements OnInit {
     if (this.myForm.valid) {
       console.log('Form submitted successfully!', this.myForm.value);
     } else {
-      console.log('Form is invalid, please correct the errors.');
+      alert("fill all fields...")
     }
   }
   navigateToLogin(){
