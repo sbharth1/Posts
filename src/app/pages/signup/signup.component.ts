@@ -20,13 +20,15 @@ export class SignupComponent implements OnInit {
       lastName: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      rememberMe: [false],
+      // rememberMe: [false],
     });
   }
 
   onSubmit(): void {
     if (this.myForm.valid) {
       console.log('Form submitted successfully!', this.myForm.value);
+      this.myForm.reset();
+
     } else {
       alert("fill all fields...")
     }
