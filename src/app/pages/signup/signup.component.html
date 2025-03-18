@@ -1,10 +1,10 @@
 <section>
-  <div class="container bg-dark text-light">
+  <div class="container mt-5">
     <div class="row justify-content-center">
-      <div class="col-md-6">
+      <div class="col-md-6 p-3 box-sh">
         <h2 class="text-center my-4">Sign up</h2>
 
-        <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="myForm" class="p-2" (ngSubmit)="onSubmit()">
           <div class="mb-3">
             <label for="firstName" class="form-label">Full Name</label>
             <input
