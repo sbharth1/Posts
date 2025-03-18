@@ -1,10 +1,10 @@
 <section>
-  <div class="container bg-dark text-light">
+  <div class="container mt-5">
     <div class="row justify-content-center">
-      <div class="col-md-6">
+      <div class="col-md-6 box-sh p-3">
         <h2 class="text-center my-4">Login</h2>
 
-        <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="myForm"  class="p-2" (ngSubmit)="onSubmit()">
           <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input
@@ -55,12 +55,6 @@
               >
             </div>
           </div>
-
-          <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="rememberMe" />
-            <label class="form-check-label" for="rememberMe">Remember me</label>
-          </div>
-
           <button type="submit" class="btn btn-primary w-100">Login</button>
         </form>
 
