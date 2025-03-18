@@ -4,7 +4,7 @@
       <div class="col-md-6">
         <h2 class="text-center my-4">Login</h2>
 
-        <form (ngSubmit)="onSubmit()">
+        <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
           <div class="mb-3">
             <label for="username" class="form-label">Username</label>
             <input
