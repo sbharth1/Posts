@@ -30,7 +30,8 @@ export class LoginComponent implements OnInit{
       alert("fill all fields...")
     }
   }
-  navigateToSignup() {
+
+  navigateToSignUp() {
     this.router.navigate(['/signup']);
   }
 }
