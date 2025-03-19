@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
+const signup_1 = require("../controllers/auth/signup");
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
     origin: 'http://localhost:36317',
@@ -13,4 +14,5 @@ app.use((0, cors_1.default)({
 }));
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
+app.post("/signup", signup_1.signup);
 module.exports = app;

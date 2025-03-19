@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import { signup } from '../controllers/auth/signup';
 const app = express();
 
 app.use(
@@ -13,7 +14,7 @@ app.use(
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// app.use();
+app.post("/signup",signup);
 
 
 export = app;

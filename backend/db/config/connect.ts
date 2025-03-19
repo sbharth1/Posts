@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 
+// public url
 const CONNECT_DB = "mongodb://localhost:27017/postUserData"
 
 if(!CONNECT_DB){
