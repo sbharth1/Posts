@@ -5,7 +5,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: 'http://localhost:36317',
+    origin: 'http://localhost:4200',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization'],
