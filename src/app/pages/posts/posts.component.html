@@ -1,4 +1,4 @@
-<main>
+<main style="height: 100%;">
   <!-- Navbar Section -->
   <nav class="navbar bg-success">
     <div class="container-fluid">
@@ -26,15 +26,18 @@
   <div class="container mt-5">
     <div class="row d-flex justify-content-center">
       <!-- Post Card Loop -->
-      <div class="col-md-4 mb-4" *ngFor="let item of allItems">
-        <div class="card mx-auto" style="width: 100%; margin-bottom: 20px">
+      <div class="col-md-4 mb-4"  *ngFor="let item of allItems">
+        <div class="card mx-auto" style="width: 100%; margin-bottom: 20px;">
           <img
             src="https://img.freepik.com/premium-photo/fun-pig-animation_183364-21771.jpg?w=1380"
             class="card-img-top"
+            height="200px"
             alt="Fun animated pig character"
             style="border-bottom: 1px solid #000"
           />
           <div class="card-body">
+            <mat-icon aria-hidden="false" aria-label="Example like" >thumb_up</mat-icon>
+
             <p class="card-text">
               Some quick example text to build on the card title and make up the
               bulk of the card's content.
