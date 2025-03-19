@@ -23,12 +23,14 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             res.json({
                 msg: 'all fields not filled..',
             });
+            return;
         }
         const userExist = yield userSchema_1.default.findOne({ email });
         if (userExist) {
             res.status(404).json({
                 message: 'User already exist',
             });
+            return;
         }
         const user = new userSchema_1.default(req.body);
         yield user.save();
