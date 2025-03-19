@@ -14,12 +14,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.signup = void 0;
 const connect_1 = __importDefault(require("../../db/config/connect"));
+const userSchema_1 = __importDefault(require("../../db/models/userSchema"));
 const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    yield (0, connect_1.default)();
-    const { firstName, lastName, email, password } = req.body;
-    console.log(firstName, lastName, email, password, '--some shit...');
-    res.json({
-        msg: "user inserted..."
-    });
+    try {
+        yield (0, connect_1.default)();
+        const { firstName, lastName, email, password } = req.body;
+        if (!firstName || !lastName || !email || !password) {
+            res.json({
+                msg: 'all fields not filled..',
+            });
+        }
+        const userExist = yield userSchema_1.default.findOne({ email });
+        if (userExist) {
+            res.status(404).json({
+                message: 'User already exist',
+            });
+        }
+        const user = new userSchema_1.default(req.body);
+        yield user.save();
+        console.log(firstName, lastName, email, password, '-- some shit users...');
+        res.json({
+            msg: 'user inserted...',
+        });
+    }
+    catch (err) {
+        res.status(500).json({
+            message: 'Interanal Server Error',
+        });
+    }
 });
 exports.signup = signup;

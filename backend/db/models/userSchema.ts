@@ -1,6 +1,14 @@
 import { Schema, model } from 'mongoose';
+import bcrypt from 'bcryptjs'
 
-const userSchema = new Schema(
+interface typeUserSchema {
+    firstName:string,
+    lastName:string,
+    email:string,
+    password:string
+}
+
+const userSchema = new Schema<typeUserSchema>(
   {
     firstName: {
       type: String,
@@ -22,6 +30,18 @@ const userSchema = new Schema(
   },
   { timestamps: true }
 );
+
+userSchema.pre('save', async function(next) {
+    if (!this.isModified('password')) return next();
+  
+    try {
+        const salt = await bcrypt.genSalt(15);
+        this.password = await bcrypt.hash(this.password, salt);
+        next();
+    } catch (error:any) {
+        next(error);
+    }
+  });
 
 const User = model("user",userSchema)
 

@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 const mongoose_1 = __importDefault(require("mongoose"));
+// public url
 const CONNECT_DB = "mongodb://localhost:27017/postUserData";
 if (!CONNECT_DB) {
     console.error("MonogDB_URL is undefined!");
