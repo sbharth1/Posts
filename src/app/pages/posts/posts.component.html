@@ -13,7 +13,7 @@
         <button class="btn btn-outline-dark" type="submit">Search</button>
       </form>
       <div>
-        <button class="btn btn-outline-dark me-2">Add Post</button>
+        <button class="btn btn-outline-dark me-2"  data-bs-toggle="modal" data-bs-target="#exampleModal" >Add Post</button>
         <button class="btn btn-outline-dark" (click)="navigateToSignIn()">
           Sign In
         </button>
@@ -46,4 +46,6 @@
     </div>
   </div>
   <!-- Post Section End -->
+
+  <app-modal></app-modal>
 </main>

@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Item } from '../item.model';
 import { CommonModule } from '@angular/common';
 import {Router } from '@angular/router';
+import { ModalComponent } from "../../components/modal/modal.component";
 @Component({
   selector: 'app-posts',
-  imports: [CommonModule],
+  imports: [CommonModule, ModalComponent],
   templateUrl: './posts.component.html',
   styleUrl: './posts.component.scss',
 })
