@@ -34,4 +34,7 @@ export class LoginComponent implements OnInit{
   navigateToSignUp() {
     this.router.navigate(['/signup']);
   }
+  logintoseeposts(){
+    this.router.navigate(['/posts'])
+  }
 }

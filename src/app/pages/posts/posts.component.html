@@ -1,45 +1,49 @@
 <main>
-    <!-- Navbar Section -->
-    <nav class="navbar bg-success">
-      <div class="container-fluid">
-        <a class="navbar-brand fw-bolder text-white" href="#">Navbar</a>
-        <form class="d-flex" role="search">
-          <input
-            class="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button class="btn btn-outline-dark" type="submit">Search</button>
-        </form>
-        <button class="btn btn-outline-dark" (click)="navigateToSignIn()">Sign In</button>
-      </div>
-    </nav>
-    <!-- Navbar Section End -->
-  
-    <!-- Post Section -->
-    <div class="container mt-5">
-      <div class="row d-flex justify-content-center">
-        <!-- Post Card Loop -->
-        <div class="col-md-4 mb-4" *ngFor="let item of allItems">
-          <div class="card mx-auto" style="width: 100%; margin-bottom: 20px;">
-            <img
-              src="https://img.freepik.com/premium-photo/fun-pig-animation_183364-21771.jpg?w=1380"
-              class="card-img-top"
-              alt="Fun animated pig character"
-              style="border-bottom: 1px solid #000"
-            />
-            <div class="card-body">
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-            </div>
-          </div>
-        </div>
-        <!-- Post Card Loop End -->
+  <!-- Navbar Section -->
+  <nav class="navbar bg-success">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bolder text-white" href="#">Navbar</a>
+      <form class="d-flex" role="search">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-dark" type="submit">Search</button>
+      </form>
+      <div>
+        <button class="btn btn-outline-dark me-2">Add Post</button>
+        <button class="btn btn-outline-dark" (click)="navigateToSignIn()">
+          Sign In
+        </button>
       </div>
     </div>
-    <!-- Post Section End -->
-  </main>
-  
+  </nav>
+  <!-- Navbar Section End -->
+
+  <!-- Post Section -->
+  <div class="container mt-5">
+    <div class="row d-flex justify-content-center">
+      <!-- Post Card Loop -->
+      <div class="col-md-4 mb-4" *ngFor="let item of allItems">
+        <div class="card mx-auto" style="width: 100%; margin-bottom: 20px">
+          <img
+            src="https://img.freepik.com/premium-photo/fun-pig-animation_183364-21771.jpg?w=1380"
+            class="card-img-top"
+            alt="Fun animated pig character"
+            style="border-bottom: 1px solid #000"
+          />
+          <div class="card-body">
+            <p class="card-text">
+              Some quick example text to build on the card title and make up the
+              bulk of the card's content.
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- Post Card Loop End -->
+    </div>
+  </div>
+  <!-- Post Section End -->
+</main>
