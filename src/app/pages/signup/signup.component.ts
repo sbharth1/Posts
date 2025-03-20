@@ -28,7 +28,6 @@ export class SignupComponent implements OnInit {
       lastName: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      // rememberMe: [false],
     });
   }
 
@@ -37,7 +36,7 @@ export class SignupComponent implements OnInit {
       if (this.myForm.valid) {
         const formData = this.myForm.value;
         this.http
-          .post('http://localhost:3500/signup',formData)
+          .post('http://localhost:3700/signup',formData)
           .subscribe((res: any) => {
             if (res) {
               console.log(res);

@@ -1,4 +1,4 @@
-<main style="height: 100%" class="bg-dark">
+<main  class="bg-dark">
   <!-- Navbar Section -->
   <nav class="navbar bg-success">
     <div class="container-fluid">
@@ -50,15 +50,14 @@
             style="border-bottom: 1px solid #000"
           />
           <div class="card-body">
-            <div class="likeContainer d-flex">
+            <div class="d-flex">
               <mat-icon>thumb_up</mat-icon>
               <p class="ms-1 ps-1">{{ item.like }}</p>
               <mat-icon class="ms-3">comment</mat-icon>
               <p class="ms-1 ps-1">{{ item.comment }}</p>
             </div>
             <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
+              {{item.content}}
             </p>
           </div>
         </div>

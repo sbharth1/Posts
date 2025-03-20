@@ -29,13 +29,13 @@ export class LoginComponent implements OnInit {
   
   onSubmit(): void {
     try {
-      if (this.myForm.valid) {
+      if (this.myForm.valid){
         const formData = this.myForm.value;
         this.http
-          .post('http://localhost:3500/login', formData)
+          .post('http://localhost:3700/login', formData)
           .subscribe((res: any) => {
             if (res) {
-             localStorage.setItem('token', res.token);
+             localStorage.setItem('token',res.token);
               this.myForm.reset();
               this.router.navigate(['/posts']);
             } else {
