@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, inject, OnInit } from '@angular/core';
 import { ReactiveFormsModule ,Validators,FormBuilder,FormGroup} from '@angular/forms';
 import { Router } from '@angular/router';
 @Component({
@@ -9,6 +10,8 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit{
+
+  http = inject(HttpClient);
   
   myForm! : FormGroup;
   constructor(private router: Router,private fb:FormBuilder) {}
@@ -22,12 +25,25 @@ export class LoginComponent implements OnInit{
   }
 
   onSubmit(): void {
-    if (this.myForm.valid) {
-      console.log('Form submitted successfully!', this.myForm.value);
-      this.myForm.reset();
+    try {
+      if (this.myForm.valid) {
+        const formData = this.myForm.value;
+        this.http
+          .post('http://localhost:3500/login',formData)
+          .subscribe((res: any) => {
+            if (res) {
+              console.log(res);
+              this.myForm.reset()
 
-    } else {
-      alert("fill all fields...")
+            } else {
+              console.log('err in post api');
+            }
+          });
+      } else {
+        alert('fill all fields...');
+      }
+    } catch (err) {
+      console.log(err + 'frontend interanl server error');
     }
   }
 
