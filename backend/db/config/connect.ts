@@ -1,11 +1,14 @@
 import mongoose from 'mongoose'
+import dotenv from 'dotenv'
+dotenv.config();
+const {MONGODB_URL} = process.env;
 
-// public url
-const CONNECT_DB:string = "mongodb://localhost:27017/postUserData"
 
-if(!CONNECT_DB){
+if(!MONGODB_URL){
     console.error("MonogDB_URL is undefined!");
  }
+// public url
+const CONNECT_DB:string = MONGODB_URL || "mongodb://localhost:27017/data";
 
  async function dbConnect() {
     
