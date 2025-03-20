@@ -17,7 +17,7 @@ export const signup = async (req: Request, res: Response) => {
     const userExist = await User.findOne({ email });
     if (userExist) {
       res.status(404).json({
-        message: 'Signup successfully...',
+        message: 'User already exist',
       });
       return;
     }
@@ -28,7 +28,7 @@ export const signup = async (req: Request, res: Response) => {
     console.log(firstName, lastName, email, password, '-- some shit users...');
 
     res.json({
-      msg: 'user inserted...',
+      msg: 'signup successfully...',
     });
   } catch (err) {
     res.status(500).json({

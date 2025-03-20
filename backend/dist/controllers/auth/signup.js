@@ -28,7 +28,7 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const userExist = yield userSchema_1.default.findOne({ email });
         if (userExist) {
             res.status(404).json({
-                message: 'Signup successfully...',
+                message: 'User already exist',
             });
             return;
         }
@@ -36,7 +36,7 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         yield user.save();
         console.log(firstName, lastName, email, password, '-- some shit users...');
         res.json({
-            msg: 'user inserted...',
+            msg: 'signup successfully...',
         });
     }
     catch (err) {
