@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 // public url
-const CONNECT_DB = "mongodb://localhost:27017/postUserData"
+const CONNECT_DB:string = "mongodb://localhost:27017/postUserData"
 
 if(!CONNECT_DB){
     console.error("MonogDB_URL is undefined!");
