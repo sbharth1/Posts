@@ -42,6 +42,7 @@ export class SignupComponent implements OnInit {
             if (res) {
               console.log(res);
               this.myForm.reset()
+              this.router.navigate(['/login'])
 
             } else {
               console.log('err in post api');

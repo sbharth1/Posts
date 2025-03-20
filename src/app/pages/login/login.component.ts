@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit{
             if (res) {
               console.log(res);
               this.myForm.reset()
+              this.router.navigate(['/posts'])
 
             } else {
               console.log('err in post api');
