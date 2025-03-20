@@ -1,5 +1,5 @@
 
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID, AfterViewChecked } from '@angular/core';
 import { Item } from '../item.model';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,11 +19,11 @@ export class PostsComponent implements OnInit {
   constructor(private router: Router, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   items: Item[] = [
-    { item: 1, content: 'fake text' },
-    { item: 2, content: 'fake text' },
-    { item: 3, content: 'fake text' },
-    { item: 4, content: 'fake text' },
-    { item: 5, content: 'fake text' },
+    { like: 3,comment:5, content: 'fake text' },
+    { like: 9,comment:2, content: 'fake text' },
+    { like: 2,comment:6, content: 'fake text' },
+    { like: 8,comment:9, content: 'fake text' },
+    { like: 3,comment:7, content: 'fake text' },
   ];
 
   allItems: Item[] = [];
@@ -39,4 +39,11 @@ export class PostsComponent implements OnInit {
   navigateToSignIn() {
     this.router.navigate(['login']);
   }
+  
+  onLogOut(){
+    localStorage.removeItem("token");
+    this.token = null;
+  }
+
 }
+
