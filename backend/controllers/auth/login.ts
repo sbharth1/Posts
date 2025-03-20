@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import dbConnect from '../../db/config/connect';
 import User from '../../db/models/userSchema';
 import bcrypt from 'bcryptjs';
+import { generateToken } from '../../utils/jwt';
 
 export const login = async (req: Request, res: Response) => {
   try {
@@ -41,8 +42,11 @@ export const login = async (req: Request, res: Response) => {
       return;
     }
 
+  const token  = generateToken(email);
+
     res.status(200).json({
       message: 'Login successful',
+      token,
       data: {
         userId: user._id,
         email: user.email,

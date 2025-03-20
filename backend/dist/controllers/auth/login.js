@@ -16,6 +16,7 @@ exports.login = void 0;
 const connect_1 = __importDefault(require("../../db/config/connect"));
 const userSchema_1 = __importDefault(require("../../db/models/userSchema"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const jwt_1 = require("../../utils/jwt");
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield (0, connect_1.default)();
@@ -46,8 +47,10 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             });
             return;
         }
+        const token = (0, jwt_1.generateToken)(email);
         res.status(200).json({
             message: 'Login successful',
+            token,
             data: {
                 userId: user._id,
                 email: user.email,

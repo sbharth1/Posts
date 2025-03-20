@@ -8,7 +8,7 @@ if (!SECRET_KEY) {
   console.log('secret_key is undefined...');
 }
 
-const generateToken = (userId: string) => {
+export const generateToken = (userId: string) => {
   return jwt.sign({ userId }, SECRET_KEY, { expiresIn: '1h' });
 };
 
@@ -27,4 +27,3 @@ const generateToken = (userId: string) => {
 //   }
 // }
 
-export = generateToken;

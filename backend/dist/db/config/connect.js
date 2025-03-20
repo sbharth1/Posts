@@ -12,11 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 const mongoose_1 = __importDefault(require("mongoose"));
-// public url
-const CONNECT_DB = "mongodb://localhost:27017/postUserData";
-if (!CONNECT_DB) {
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+const { MONGODB_URL } = process.env;
+if (!MONGODB_URL) {
     console.error("MonogDB_URL is undefined!");
 }
+// public url
+const CONNECT_DB = MONGODB_URL || "mongodb://localhost:27017/data";
 function dbConnect() {
     return __awaiter(this, void 0, void 0, function* () {
         mongoose_1.default.connect(CONNECT_DB)
