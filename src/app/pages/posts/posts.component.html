@@ -1,4 +1,4 @@
-<main style="height: 100%;" class="bg-dark  ">
+<main style="height: 100%" class="bg-dark">
   <!-- Navbar Section -->
   <nav class="navbar bg-success">
     <div class="container-fluid">
@@ -8,14 +8,22 @@
           class="form-control me-2"
           type="search"
           placeholder="Search"
-          aria-label="Search" 
+          aria-label="Search"
         />
         <button class="btn btn-outline-dark" type="submit">Search</button>
       </form>
       <div>
-        <button class="btn btn-outline-dark me-2"  data-bs-toggle="modal" data-bs-target="#exampleModal" >Add Post</button>
-        <button class="btn btn-outline-dark" (click)="navigateToSignIn()">
-          Sign In
+        <button
+          class="btn btn-outline-dark me-2"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          Add Post
+        </button>
+        
+        <button *ngIf="token" class="btn btn-outline-dark">LogOut</button>
+        <button *ngIf="!token" class="btn btn-outline-dark" (click)="navigateToSignIn()">
+          SignIn
         </button>
       </div>
     </div>
@@ -26,8 +34,8 @@
   <div class="container mt-5">
     <div class="row d-flex justify-content-center">
       <!-- Post Card Loop -->
-      <div class="col-md-4 mb-4"  *ngFor="let item of allItems">
-        <div class="card mx-auto" style="width: 100%; margin-bottom: 20px;">
+      <div class="col-md-4 mb-4" *ngFor="let item of allItems">
+        <div class="card mx-auto" style="width: 100%; margin-bottom: 20px">
           <img
             src="https://img.freepik.com/premium-photo/fun-pig-animation_183364-21771.jpg?w=1380"
             class="card-img-top"
@@ -35,8 +43,9 @@
             alt="Fun animated pig character"
             style="border-bottom: 1px solid #000"
           />
-          <div class="card-body">      
-                <mat-icon aria-hidden="false" aria-label="Example like" >thumb_up</mat-icon>
+          <div class="card-body">
+            <!-- Material Icon -->
+            <mat-icon>thumb_up</mat-icon>
             <p class="card-text">
               Some quick example text to build on the card title and make up the
               bulk of the card's content.

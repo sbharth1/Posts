@@ -27,7 +27,7 @@ export const signup = async (req: Request, res: Response) => {
 
     console.log(firstName, lastName, email, password, '-- some shit users...');
 
-    res.json({
+    res.status(200).json({
       msg: 'signup successfully...',
     });
   } catch (err) {
