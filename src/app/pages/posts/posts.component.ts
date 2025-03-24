@@ -1,14 +1,15 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID,TemplateRef,WritableSignal, signal } from '@angular/core';
 import { Item } from '../item.model';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import { ModalComponent } from '../../components/modal/modal.component';
 import { isPlatformBrowser } from '@angular/common';
+import { ModalDismissReasons, NgbDatepickerModule,NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-posts',
-  imports: [CommonModule, ModalComponent, MatIconModule],
+  imports: [CommonModule, MatIconModule,NgbDatepickerModule,],
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.scss'],
 })
@@ -17,8 +18,12 @@ export class PostsComponent implements OnInit {
 
   constructor(
     private router: Router,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private modalService: NgbModal,
   ) {}
+
+  closeResult: WritableSignal<string> = signal('');
+
 
   items: Item[] = [
     {
@@ -87,4 +92,32 @@ export class PostsComponent implements OnInit {
   onAddPost(){
     console.log('Add post');
   }
+
+
+  // modal open & close code ----------------------------------------
+
+  open(content: TemplateRef<any>) {
+		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+			(result) => {
+				this.closeResult.set(`Closed with: ${result}`);
+			},
+			(reason) => {
+				this.closeResult.set(`Dismissed ${this.getDismissReason(reason)}`);
+			},
+		);  
+	}
+
+  private getDismissReason(reason: any): string {
+		switch (reason) {
+			case ModalDismissReasons.ESC:
+				return 'by pressing ESC';
+			case ModalDismissReasons.BACKDROP_CLICK:
+				return 'by clicking on a backdrop';
+			default:
+				return `with: ${reason}`;
+		}
+	}
+
+// end modal code
+
 }

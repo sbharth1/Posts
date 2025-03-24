@@ -1,9 +1,9 @@
-<main  class="bg-dark">
+<main class="bg-dark">
   <!-- Navbar Section -->
   <nav class="navbar bg-success">
     <div class="container-fluid">
       <a class="navbar-brand fw-bolder text-white" href="#">Navbar</a>
-      <form  class="d-flex" role="search">
+      <form class="d-flex" role="search">
         <input
           class="form-control me-2"
           type="search"
@@ -13,12 +13,7 @@
         <button class="btn btn-outline-dark" type="submit">Search</button>
       </form>
       <div>
-        <button
-          class="btn btn-outline-dark me-2"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-          (click)="onAddPost()"
-        >
+        <button class="btn btn-outline-dark me-2" (click)="open(content)">
           Add Post
         </button>
 
@@ -58,7 +53,7 @@
               <p class="ms-1 ps-1">{{ item.comment }}</p>
             </div>
             <p class="card-text">
-              {{item.content}}
+              {{ item.content }}
             </p>
           </div>
         </div>
@@ -68,5 +63,47 @@
   </div>
   <!-- Post Section End -->
 
-  <app-modal></app-modal>
+
+
+
+  <!-- modal -->
+  <ng-template #content let-modal>
+    <div class="container">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Add Post</h1>
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="modal.dismiss()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-3">
+          <input
+            type="file"
+            class="rounded file-upload"
+            formControlName="image"
+            size="20"
+            accept="image/*"
+          />
+        </div>
+        <div class="col-md-3 textareainput fs-5 mt-4">
+          <input
+            class="p-2 textareainput rounded"
+            type="text"
+            formControlName="description"
+            placeholder="description"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">
+          Close
+        </button>
+        <button type="submit" class="btn btn-primary" (click)="onAddPost()">Add Post</button>
+      </div>
+    </div>
+  </ng-template>
+  <!-- modal end -->
 </main>
