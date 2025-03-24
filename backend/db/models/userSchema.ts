@@ -1,11 +1,12 @@
-import { Schema, model } from 'mongoose';
-import bcrypt from 'bcryptjs'
+import { Schema, model} from "mongoose";
+import bcrypt from 'bcryptjs';
 
 interface typeUserSchema {
-    firstName:string,
-    lastName:string,
-    email:string,
-    password:string
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  posts: string[];
 }
 
 const userSchema = new Schema<typeUserSchema>(
@@ -27,22 +28,29 @@ const userSchema = new Schema<typeUserSchema>(
       type: String,
       required: true,
     },
+
+    posts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'post',
+      },
+    ],
   },
   { timestamps: true }
 );
 
-userSchema.pre('save', async function(next) {
-    if (!this.isModified('password')) return next();
-  
-    try {
-        const salt = await bcrypt.genSalt(15);
-        this.password = await bcrypt.hash(this.password, salt);
-        next();
-    } catch (error:any) {
-        next(error);
-    }
-  });
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
 
-const User = model("user",userSchema)
+  try {
+    const salt = await bcrypt.genSalt(15);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (error: any) {
+    next(error);
+  }
+});
 
-export  = User;
+const User = model('user', userSchema);
+
+export = User;

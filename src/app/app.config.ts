@@ -7,7 +7,7 @@ import {
   withEventReplay,
 } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { tokenInterceptor } from './interceptor/token.interceptor';
+import { tokenInterceptor } from './interceptor/token/token.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [

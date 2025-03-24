@@ -3,7 +3,6 @@ import {
   OnInit,
   Inject,
   PLATFORM_ID,
-  AfterViewChecked,
 } from '@angular/core';
 import { Item } from '../item.model';
 import { CommonModule } from '@angular/common';
@@ -43,31 +42,31 @@ export class PostsComponent implements OnInit {
       like: 2,
       comment: 6,
       content:
-        'Electric vehicles are facing an uncertain future under the Trump administration, with plans to scrap EV tax credits and slash funding for charging stations.',
+        'Electric vehicles are facing an uncertain future under the Trump administration, with plans to scrap EV tax.',
     },
     {
       like: 8,
       comment: 9,
       content:
-        'In the scorching opal mining town of Coober Pedy, White people live in cool “dugouts” while their Aboriginal neighbors suffer above, often without air conditioning.',
+        'In the scorching opal mining town of Coober Pedy, White people live in cool “dugouts” while their Aboriginal neighbors.',
     },
     {
       like: 3,
       comment: 7,
       content:
-        'The Post analyzed the careers of 10,000 college basketball players to see how transfers are increasingly shaping the sport while their Aboriginal neighbors suffer above.',
+        'The Post analyzed the careers of 10,000 college basketball players to see how transfers are increasingly shaping the sport.',
     },
     {
       like: 3,
       comment: 7,
       content:
-        'The Post analyzed the careers of 10,000 college basketball players to see how transfers are increasingly shaping the sport while their Aboriginal neighbors suffer above.',
+        'The Post analyzed the careers of 10,000 college basketball players to see how transfers are increasingly shaping.',
     },
     {
       like: 3,
       comment: 7,
       content:
-        'The Post analyzed the careers of 10,000 college basketball players to see how transfers are increasingly shaping the sport while their Aboriginal neighbors suffer above.',
+        'The Post analyzed the careers of 10,000 college basketball players to see how transfers are increasingly shaping.',
     },
   ];
 

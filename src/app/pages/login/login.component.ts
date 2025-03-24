@@ -26,16 +26,19 @@ export class LoginComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
-  
+
+  isLoading: boolean = false;
+
   onSubmit(): void {
     try {
-      if (this.myForm.valid){
+      if (this.myForm.valid) {
         const formData = this.myForm.value;
         this.http
           .post('http://localhost:3700/login', formData)
           .subscribe((res: any) => {
             if (res) {
-             localStorage.setItem('token',res.token);
+              this.isLoading = true;
+              localStorage.setItem('token', res.token);
               this.myForm.reset();
               this.router.navigate(['/posts']);
             } else {
