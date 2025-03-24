@@ -25,7 +25,6 @@ export const signup = async (req: Request, res: Response) => {
     const user = new User(req.body);
     await user.save();
 
-    console.log(firstName, lastName, email, password, '-- some shit users...');
 
     res.status(200).json({
       msg: 'signup successfully...',

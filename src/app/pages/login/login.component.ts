@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +21,12 @@ export class LoginComponent implements OnInit {
   http = inject(HttpClient);
   myForm!: FormGroup;
   isLoading: boolean = false;
-  constructor(private router: Router, private fb: FormBuilder,private toastr:ToastrService) {}
+
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.myForm = this.fb.group({
@@ -30,38 +35,43 @@ export class LoginComponent implements OnInit {
     });
   }
 
-
   onSubmit(): void {
-    try {
+    if (this.myForm.valid) {
       this.isLoading = true;
-      if (this.myForm.valid) {
-        const formData = this.myForm.value;
-        this.http
-          .post('http://localhost:3700/login', formData)
-          .subscribe((res: any) => {
-            if (res) {
-              localStorage.setItem('token', res.token);
-              this.myForm.reset();
-              this.toastr.success('Login success');
-              this.router.navigate(['/posts']);
-            } else {
-              this.toastr.error('Login failed');
-              console.log('err in post api');
-            }
-          });
-      } else {
-        this.isLoading = false;
-        alert('fill all fields...');
-      }
-    } catch (err) {
-      this.isLoading = true;
-      console.log(err + 'frontend interanl server error');
+      const formData = this.myForm.value;
+      this.http
+        .post('http://localhost:3700/login', formData)
+        .pipe(
+          catchError((error) => {
+            this.isLoading = false;
+            this.toastr.error('Login failed');
+            console.error('Login error', error);
+            return error;
+          })
+        )
+        .subscribe((res: any) => {
+          this.isLoading = false;
+
+          if (res) {
+            localStorage.setItem('token', res.token);
+            this.myForm.reset();
+            this.toastr.success('Login successful');
+            this.router.navigate(['/posts']);
+          } else {
+            this.toastr.error('Login failed');
+            console.log('Error: No response data');
+          }
+        });
+    } else {
+      this.isLoading = false;
+      this.toastr.warning('Please fields are required fields');
     }
   }
 
   navigateToSignUp() {
     this.router.navigate(['/signup']);
   }
+
   logintoseeposts() {
     this.router.navigate(['/posts']);
   }

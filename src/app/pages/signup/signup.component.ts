@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { catchError } from 'rxjs';
 
 @Component({
   imports: [ReactiveFormsModule, CommonModule],
@@ -19,6 +20,7 @@ import { Router } from '@angular/router';
 export class SignupComponent implements OnInit {
   http = inject(HttpClient);  
   myForm!: FormGroup;
+  isLoading = false;
 
   constructor(private fb: FormBuilder, private router: Router,private toastr:ToastrService) {}
 
@@ -33,12 +35,21 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit(): void {
-    try {
       if (this.myForm.valid) {
+        this.isLoading = true;
         const formData = this.myForm.value;
         this.http
           .post('http://localhost:3700/signup',formData)
+          .pipe(
+            catchError((error) => {
+              this.isLoading = false;
+              this.toastr.error('Signup failed');
+              console.error('Signup error', error);
+              return error;
+            })
+          )
           .subscribe((res: any) => {
+            this.isLoading = false;
             if (res) {
               console.log(res);
               this.myForm.reset();
@@ -51,13 +62,13 @@ export class SignupComponent implements OnInit {
             }
           });
       } else {
-        alert('fill all fields...');
+        this.isLoading = false;
+        this.toastr.warning('All fields are required');
       }
-    } catch (err) {
-      console.log(err + 'frontend interanl server error');
-    }
-  }
-  navigateToLogin() {
+    } 
+
+
+    navigateToLogin() {
     this.router.navigate(['/login']);
   }
 
