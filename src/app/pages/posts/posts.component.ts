@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Inject,
-  PLATFORM_ID,
-} from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { Item } from '../item.model';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -87,5 +82,9 @@ export class PostsComponent implements OnInit {
   onLogOut() {
     localStorage.removeItem('token');
     this.token = null;
+  }
+
+  onAddPost(){
+    console.log('Add post');
   }
 }

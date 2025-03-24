@@ -16,6 +16,9 @@ interface typePostSchema {
         required: boolean;  
     };
 }
+// ------------------------------------------
+
+
 
 const postSchema = new Schema<typePostSchema>({
     description: {
