@@ -1,15 +1,32 @@
 import { Schema, model } from 'mongoose';
 
-const postSchema = new Schema({
+interface typePostSchema {
+    description: string;
+    image: string;
+    likes: number;
+    likedBy: {type:string[],ref:string};
+    comments: {
+        text: string;   
+        created: Date;
+        commentedBy: string;
+    }[];
+    user: {
+        type: string;
+        ref: string;
+        required: boolean;  
+    };
+}
+
+const postSchema = new Schema<typePostSchema>({
     description: {
         type: String,   
     },
     image: {
         type: String,
     },
-    likes :{
-        type:String,
-        default:0
+    likes: {
+        type: Number,
+        default: 0
     },
     likedBy: {
         type: [Schema.Types.ObjectId],
@@ -18,7 +35,7 @@ const postSchema = new Schema({
     comments: [
         {
             text: String,
-            created:{type:Date,default:Date.now},
+            created: { type: Date, default: Date.now },
             commentedBy: {
                 type: Schema.Types.ObjectId,
                 ref: 'User',
@@ -30,9 +47,8 @@ const postSchema = new Schema({
         ref: 'User',
         required: true,
     },
-},{timestamps:true});
+}, { timestamps: true });
 
-
-const Post = model('Post', postSchema);
+const Post = model<typePostSchema>('Post', postSchema);
 
 export = Post;
