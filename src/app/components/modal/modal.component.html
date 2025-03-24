@@ -5,7 +5,7 @@
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
 >
-  <form>
+  <form [formGroup]="modalForm" (ngSubmit)="onAddPost()">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -22,6 +22,7 @@
             <input
               type="file"
               class="rounded file-upload"
+              formControlName="image"
               size="20"
               accept="image/*"
             />
@@ -30,6 +31,7 @@
             <input
               class="p-2 textareainput rounded"
               type="text"
+              formControlName="description"
               placeholder="description"
             />
           </div>
