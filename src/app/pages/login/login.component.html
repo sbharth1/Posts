@@ -54,8 +54,9 @@
                 >Password must be at least 6 characters long.</small
               >
             </div>
-          </div>
-          <button type="submit" class="btn btn-primary w-100">Login</button>
+          </div> 
+          <button  type="submit"  class="btn btn-primary w-100">{{isLoading ? 'Loading...' : 'Login'}}</button>
+         
         </form>
 
         <div class="text-center mt-3">

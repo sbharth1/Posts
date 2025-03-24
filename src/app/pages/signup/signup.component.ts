@@ -7,6 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,7 +20,7 @@ export class SignupComponent implements OnInit {
   http = inject(HttpClient);  
   myForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(private fb: FormBuilder, private router: Router,private toastr:ToastrService) {}
 
 
   ngOnInit(): void {
@@ -40,10 +41,12 @@ export class SignupComponent implements OnInit {
           .subscribe((res: any) => {
             if (res) {
               console.log(res);
-              this.myForm.reset()
+              this.myForm.reset();
+              this.toastr.success('Signup success');
               this.router.navigate(['/login'])
 
             } else {
+              this.toastr.error('Signup failed');
               console.log('err in post api');
             }
           });

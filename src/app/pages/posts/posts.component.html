@@ -69,6 +69,7 @@
   <!-- modal -->
   <ng-template #content let-modal>
     <div class="container">
+      <form [formGroup]="modalForm" (ngSubmit)="onAddPost()">
       <div class="modal-header">
         <h1 class="modal-title fs-5">Add Post</h1>
         <button
@@ -83,7 +84,7 @@
           <input
             type="file"
             class="rounded file-upload"
-            formControlName="image"
+            (change)="onFileChange($event)"
             size="20"
             accept="image/*"
           />
@@ -101,9 +102,12 @@
         <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">
           Close
         </button>
-        <button type="submit" class="btn btn-primary" (click)="onAddPost()">Add Post</button>
+        <button type="submit" class="btn btn-primary">Add Post</button>
       </div>
+    </form>
     </div>
   </ng-template>
   <!-- modal end -->
+
+
 </main>

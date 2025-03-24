@@ -1,29 +1,57 @@
-import { Component, OnInit, Inject, PLATFORM_ID,TemplateRef,WritableSignal, signal } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Inject,
+  PLATFORM_ID,
+  TemplateRef,
+  WritableSignal,
+  signal,
+} from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { Item } from '../item.model';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
-import { ModalDismissReasons, NgbDatepickerModule,NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
+import {
+  ModalDismissReasons,
+  NgbDatepickerModule,
+  NgbModal,
+} from '@ng-bootstrap/ng-bootstrap';
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  Validators,
+  FormGroup,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-posts',
-  imports: [CommonModule, MatIconModule,NgbDatepickerModule,],
+  imports: [
+    CommonModule,
+    MatIconModule,
+    NgbDatepickerModule,
+    ReactiveFormsModule,
+  ],
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.scss'],
 })
 export class PostsComponent implements OnInit {
+  modalForm!: FormGroup;
   token: string | null = null;
+  selectedImage:File | null = null;
 
   constructor(
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
     private modalService: NgbModal,
+    private fb: FormBuilder,
+    private toastr: ToastrService
   ) {}
 
   closeResult: WritableSignal<string> = signal('');
-
+  
+  allItems: Item[] = [];
 
   items: Item[] = [
     {
@@ -70,10 +98,13 @@ export class PostsComponent implements OnInit {
     },
   ];
 
-  allItems: Item[] = [];
 
   ngOnInit(): void {
     this.allItems = this.items.map((item) => ({ ...item }));
+
+    this.modalForm = this.fb.group({ 
+      description: ['', [Validators.required]],
+    });
 
     if (isPlatformBrowser(this.platformId)) {
       this.token = localStorage.getItem('token');
@@ -89,35 +120,53 @@ export class PostsComponent implements OnInit {
     this.token = null;
   }
 
-  onAddPost(){
-    console.log('Add post');
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      console.log(file, '---- image file');
+      this.selectedImage = file;
+    }
   }
 
+  onAddPost() {
+    if (this.modalForm.valid && this.selectedImage) {
+      const formData = this.modalForm.value;
+      console.log(formData);
+      console.log('Selected Image:', this.selectedImage);
+      this.modalForm.reset();
+      this.selectedImage = null;
+      this.modalService.dismissAll()
+      this.toastr.success('Post added successfully');
+    } else {
+      this.toastr.error('Both fields are required..');
+    }
+  }
 
   // modal open & close code ----------------------------------------
 
   open(content: TemplateRef<any>) {
-		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
-			(result) => {
-				this.closeResult.set(`Closed with: ${result}`);
-			},
-			(reason) => {
-				this.closeResult.set(`Dismissed ${this.getDismissReason(reason)}`);
-			},
-		);  
-	}
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .result.then(
+        (result) => {
+          this.closeResult.set(`Closed with: ${result}`);
+        },
+        (reason) => {
+          this.closeResult.set(`Dismissed ${this.getDismissReason(reason)}`);
+        }
+      );
+  }
 
   private getDismissReason(reason: any): string {
-		switch (reason) {
-			case ModalDismissReasons.ESC:
-				return 'by pressing ESC';
-			case ModalDismissReasons.BACKDROP_CLICK:
-				return 'by clicking on a backdrop';
-			default:
-				return `with: ${reason}`;
-		}
-	}
+    switch (reason) {
+      case ModalDismissReasons.ESC:
+        return 'by pressing ESC';
+      case ModalDismissReasons.BACKDROP_CLICK:
+        return 'by clicking on a backdrop';
+      default:
+        return `with: ${reason}`;
+    }
+  }
 
-// end modal code
-
+  // end modal code
 }
