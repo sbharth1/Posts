@@ -28,14 +28,15 @@ app.use((0, cors_1.default)({
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
 app.use('/', router_1.default);
+app.use('/uploads', express_1.default.static(path_1.default.join(__dirname, '../uploads')));
 // For image upload route----------------------------------------
-const uploadsDir = path_1.default.join(__dirname, 'uploads/images/');
+const uploadsDir = path_1.default.join(__dirname, '../uploads/images/');
 if (!fs_1.default.existsSync(uploadsDir)) {
     fs_1.default.mkdirSync(uploadsDir, { recursive: true });
 }
 const storage = multer_1.default.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/');
+        cb(null, uploadsDir);
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + path_1.default.extname(file.originalname));

@@ -22,16 +22,17 @@ app.use(express.json());
 app.use('/', router);
 
 
+
 // For image upload route----------------------------------------
 
-const uploadsDir = path.join(__dirname, 'uploads/images/');
+const uploadsDir = path.join(__dirname, '../uploads/images/');
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/');
+    cb(null, uploadsDir);
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + path.extname(file.originalname));
@@ -50,9 +51,10 @@ app.post('/posts', upload.single('image'), async (req: Request, res: Response) =
      return;
   }
 
+
   const newPost = {
     description,
-    imageUrl: image.path, 
+    imageUrl:image.path, 
   };
 
    res.status(200).json({ message: 'Post added successfully', post: newPost });
