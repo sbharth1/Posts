@@ -31,6 +31,12 @@ const userSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
+    posts: [
+        {
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: 'post',
+        },
+    ],
 }, { timestamps: true });
 userSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -46,5 +52,5 @@ userSchema.pre('save', function (next) {
         }
     });
 });
-const User = (0, mongoose_1.model)("user", userSchema);
+const User = (0, mongoose_1.model)('user', userSchema);
 module.exports = User;

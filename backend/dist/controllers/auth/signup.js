@@ -34,7 +34,6 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         const user = new userSchema_1.default(req.body);
         yield user.save();
-        console.log(firstName, lastName, email, password, '-- some shit users...');
         res.status(200).json({
             msg: 'signup successfully...',
         });

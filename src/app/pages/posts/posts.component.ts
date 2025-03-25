@@ -24,6 +24,8 @@ import {
   Validators,
   FormGroup,
 } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-posts',
@@ -39,18 +41,18 @@ import {
 export class PostsComponent implements OnInit {
   modalForm!: FormGroup;
   token: string | null = null;
-  selectedImage:File | null = null;
 
   constructor(
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
     private modalService: NgbModal,
     private fb: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private http: HttpClient
   ) {}
 
   closeResult: WritableSignal<string> = signal('');
-  
+
   allItems: Item[] = [];
 
   items: Item[] = [
@@ -98,12 +100,12 @@ export class PostsComponent implements OnInit {
     },
   ];
 
-
   ngOnInit(): void {
     this.allItems = this.items.map((item) => ({ ...item }));
 
-    this.modalForm = this.fb.group({ 
+    this.modalForm = this.fb.group({
       description: ['', [Validators.required]],
+      image: ['', [Validators.required]],
     });
 
     if (isPlatformBrowser(this.platformId)) {
@@ -111,62 +113,98 @@ export class PostsComponent implements OnInit {
     }
   }
 
+  
+  // modal open & close code ----------------------------------------
+  
+  open(content: TemplateRef<any>) {
+    this.modalService
+    .open(content, { ariaLabelledBy: 'modal-basic-title' })
+    .result.then(
+      (result: any) => {
+        this.closeResult.set(`Closed with: ${result}`);
+      },
+      (reason: any) => {
+        this.closeResult.set(`Dismissed ${this.getDismissReason(reason)}`);
+      }
+    );
+  }
+  
+  private getDismissReason(reason: any): string {
+    switch (reason) {
+      case ModalDismissReasons.ESC:
+        return 'by pressing ESC';
+        case ModalDismissReasons.BACKDROP_CLICK:
+          return 'by clicking on a backdrop';
+          default:
+            return `with: ${reason}`;
+          }
+        }
+        
+        
+        //  modal add post code ----------------------------------------
+        
+        onFileChange(event: any) {
+          const file = event.target.files[0];
+          if (file) {
+            console.log(file, '---- image file');
+            this.modalForm.patchValue({
+              image: file,
+            });
+          }
+        }
+        
+
+        
+        onAddPost(): void {
+          if (this.modalForm.valid) {
+            const formData = new FormData();
+            formData.append('description', this.modalForm.get('description')?.value);
+            formData.append('image', this.modalForm.get('image')?.value);
+            
+            this.http
+            .post('http://localhost:3700/posts', formData)
+            .pipe(
+              catchError((error) => {
+                this.toastr.error('Post failed');
+                console.error('Post error', error);
+                return error;
+              })
+            )
+              .subscribe((res: any) => {
+                if (res) {
+                  console.log(res);
+                  this.toastr.success('Post added successfully');
+                } else {
+                  this.toastr.error('Post failed');
+                  console.log('Error: No response data');
+                }
+              });
+              
+              this.modalForm.reset();
+              this.modalService.dismissAll();
+            } else {
+              this.toastr.error('Both fields are required..');
+            }
+          }
+          
+          
+          
+          
+          // end modal code ----------------------------------------
+          
+          
+          
+          // navigation code----------------------------------------
+
   navigateToSignIn() {
     this.router.navigate(['login']);
   }
+
+  // LogOut----------------------------------------
 
   onLogOut() {
     localStorage.removeItem('token');
     this.token = null;
   }
 
-  onFileChange(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      console.log(file, '---- image file');
-      this.selectedImage = file;
-    }
-  }
-
-  onAddPost() {
-    if (this.modalForm.valid && this.selectedImage) {
-      const formData = this.modalForm.value;
-      console.log(formData);
-      console.log('Selected Image:', this.selectedImage);
-      this.modalForm.reset();
-      this.selectedImage = null;
-      this.modalService.dismissAll()
-      this.toastr.success('Post added successfully');
-    } else {
-      this.toastr.error('Both fields are required..');
-    }
-  }
-
-  // modal open & close code ----------------------------------------
-
-  open(content: TemplateRef<any>) {
-    this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title' })
-      .result.then(
-        (result) => {
-          this.closeResult.set(`Closed with: ${result}`);
-        },
-        (reason) => {
-          this.closeResult.set(`Dismissed ${this.getDismissReason(reason)}`);
-        }
-      );
-  }
-
-  private getDismissReason(reason: any): string {
-    switch (reason) {
-      case ModalDismissReasons.ESC:
-        return 'by pressing ESC';
-      case ModalDismissReasons.BACKDROP_CLICK:
-        return 'by clicking on a backdrop';
-      default:
-        return `with: ${reason}`;
-    }
-  }
-
-  // end modal code
 }

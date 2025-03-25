@@ -1,8 +1,13 @@
 import express from 'express';
 import cors from 'cors';
 import router from '../routes/router';
+import multer from 'multer';
+import path from 'path';
+import { Request, Response } from 'express';
+
 const app = express();
 
+// CORS setup
 app.use(
   cors({
     origin: 'http://localhost:4200',
@@ -15,5 +20,36 @@ app.use(
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/', router);
+
+
+// For image upload route----------------------------------------
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+
+const upload = multer({ storage: storage });
+
+
+app.post('/posts', upload.single('image'), async (req: Request, res: Response) => {
+  const { description } = req.body;
+  const image = req.file;
+
+  if (!description || !image) {
+     res.status(400).json({ message: 'Description and image are required' });
+     return;
+  }
+
+  const newPost = {
+    description,
+    imageUrl: image.path, 
+  };
+
+   res.status(200).json({ message: 'Post added successfully', post: newPost });
+});
 
 export = app;
