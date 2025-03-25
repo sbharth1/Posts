@@ -21,9 +21,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/', router);
 
-
-
 // For image upload route----------------------------------------
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 const uploadsDir = path.join(__dirname, '../uploads/images/');
 if (!fs.existsSync(uploadsDir)) {
@@ -41,23 +40,27 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+app.post(
+  '/posts',
+  upload.single('image'),
+  async (req: Request, res: Response) => {
+    const { description } = req.body;
+    const image = req.file;
 
-app.post('/posts', upload.single('image'), async (req: Request, res: Response) => {
-  const { description } = req.body;
-  const image = req.file;
+    if (!description || !image) {
+      res.status(400).json({ message: 'Description and image are required' });
+      return;
+    }
+    const imageUrl = `/uploads/images/${image.filename}`;
 
-  if (!description || !image) {
-     res.status(400).json({ message: 'Description and image are required' });
-     return;
+    const newPost = {
+      description,
+      imageUrl,
+    };
+
+    res.status(200).json({ message: 'Post added successfully', post: newPost });
   }
-
-
-  const newPost = {
-    description,
-    imageUrl:image.path, 
-  };
-
-   res.status(200).json({ message: 'Post added successfully', post: newPost });
-});
+);
 
 export = app;
+
