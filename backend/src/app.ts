@@ -4,7 +4,7 @@ import router from '../routes/router';
 import multer from 'multer';
 import path from 'path';
 import { Request, Response } from 'express';
-
+import fs from 'fs';
 const app = express();
 
 // CORS setup
@@ -23,6 +23,12 @@ app.use('/', router);
 
 
 // For image upload route----------------------------------------
+
+const uploadsDir = path.join(__dirname, 'uploads/images/');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/');

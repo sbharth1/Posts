@@ -16,6 +16,7 @@ const cors_1 = __importDefault(require("cors"));
 const router_1 = __importDefault(require("../routes/router"));
 const multer_1 = __importDefault(require("multer"));
 const path_1 = __importDefault(require("path"));
+const fs_1 = __importDefault(require("fs"));
 const app = (0, express_1.default)();
 // CORS setup
 app.use((0, cors_1.default)({
@@ -28,6 +29,10 @@ app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
 app.use('/', router_1.default);
 // For image upload route----------------------------------------
+const uploadsDir = path_1.default.join(__dirname, 'uploads/images/');
+if (!fs_1.default.existsSync(uploadsDir)) {
+    fs_1.default.mkdirSync(uploadsDir, { recursive: true });
+}
 const storage = multer_1.default.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'uploads/');
