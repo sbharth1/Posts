@@ -1,6 +1,5 @@
 "use strict";
 const mongoose_1 = require("mongoose");
-// ------------------------------------------
 const postSchema = new mongoose_1.Schema({
     description: {
         type: String,
@@ -10,7 +9,7 @@ const postSchema = new mongoose_1.Schema({
     },
     likes: {
         type: Number,
-        default: 0
+        default: 0,
     },
     likedBy: {
         type: [mongoose_1.Schema.Types.ObjectId],

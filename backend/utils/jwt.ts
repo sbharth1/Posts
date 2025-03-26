@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import  jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -13,19 +13,25 @@ if (!SECRET_KEY) {
 };
 
  const verifyToken = (req:Request,res:Response,next:NextFunction)=>{
-  console.log(req)
+  console.log(req.headers,'----req.headers from verifyToken----------')
   try{
     const token = req.headers['authorization']?.split(' ')[1];
+    
     if(!token){
-      return res.status(403).json({"message":"No Token Provided"})
+       res.status(403).json({"message":"No Token Provided"});
+       return;
     }
-    const decoded = jwt.verify(token,SECRET_KEY);
-    req.user = decoded;
+    console.log('---token111')
+    const decoded = jwt.verify(token,SECRET_KEY) as {userId:string};
+    console.log(decoded,'---decoded')
+    req.user = {userId:decoded.userId};
+    console.log('---token222')
     next()
   }catch(err){
-  return res.status(500).json({"message":"server error"})
+   res.status(500).json({"message":"server error"});
+   return;
   }
 }
 
 
-export = {generateToken,verifyToken}
+export {generateToken,verifyToken}

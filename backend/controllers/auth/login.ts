@@ -42,7 +42,7 @@ export const login = async (req: Request, res: Response) => {
       return;
     }
 
-  const token  = generateToken(email);
+  const token  = generateToken(user._id.toString()); 
 
     res.status(200).json({
       message: 'Login successful',

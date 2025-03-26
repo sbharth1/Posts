@@ -18,6 +18,7 @@ const multer_1 = __importDefault(require("multer"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const postSchema_1 = __importDefault(require("../db/models/postSchema"));
+const jwt_1 = require("../utils/jwt");
 const app = (0, express_1.default)();
 // CORS setup
 app.use((0, cors_1.default)({
@@ -44,10 +45,18 @@ const storage = multer_1.default.diskStorage({
     },
 });
 const upload = (0, multer_1.default)({ storage: storage });
-app.post('/posts', upload.single('image'), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post('/posts', jwt_1.verifyToken, upload.single('image'), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
-        const { description, user } = req.body;
+        const { description } = req.body;
         const image = req.file;
+        const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId;
+        console.log(userId, '---userId');
+        console.log(description, '---description');
+        if (!userId) {
+            res.status(400).json({ message: 'User ID not found' });
+            return;
+        }
         if (!description || !image) {
             res.status(400).json({ message: 'Description and image are required' });
             return;
@@ -59,7 +68,7 @@ app.post('/posts', upload.single('image'), (req, res) => __awaiter(void 0, void 
             likes: 0,
             likedBy: [],
             comments: [],
-            user,
+            user: userId,
         });
         const savedPost = yield newPost.save();
         res

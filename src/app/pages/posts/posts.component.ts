@@ -154,7 +154,6 @@ export class PostsComponent implements OnInit {
         }
         
 
-        
         onAddPost(): void {
           if (this.modalForm.valid) {
             const formData = new FormData();

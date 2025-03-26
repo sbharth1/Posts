@@ -6,6 +6,7 @@ import path from 'path';
 import { Request, Response } from 'express';
 import fs from 'fs';
 import Post from '../db/models/postSchema';
+import { verifyToken } from '../utils/jwt';
 const app = express();
 
 // CORS setup
@@ -42,13 +43,20 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 app.post(
-  '/posts',
+  '/posts',verifyToken,
   upload.single('image'),
   async (req: Request, res: Response) => {
     try {
-      const { description, user } = req.body;
+      const { description } = req.body;
       const image = req.file;
+      const userId = req.user?.userId;
 
+      console.log(userId, '---userId');
+      console.log(description, '---description');
+      if (!userId) {
+         res.status(400).json({ message: 'User ID not found' });
+         return;
+      }
       if (!description || !image) {
         res.status(400).json({ message: 'Description and image are required' });
         return;
@@ -61,7 +69,7 @@ app.post(
         likes: 0,
         likedBy: [],
         comments: [],
-        user,
+        user:userId,
       });
 
       const savedPost = await newPost.save();

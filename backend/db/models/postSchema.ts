@@ -1,56 +1,56 @@
 import { Schema, model } from 'mongoose';
 
 interface typePostSchema {
-    description: string;
-    image: string;
-    likes: number;
-    likedBy: {type:string[],ref:string};
-    comments: {
-        text: string;   
-        created: Date;
-        commentedBy: string;
-    }[];
-    user: {
-        type: string;
-        ref: string;
-        required: boolean;  
-    };
+  description: string;
+  image: string;
+  likes: number;
+  likedBy: { type: Schema.Types.ObjectId[]; ref: string };  
+  comments: {
+    text: string;
+    created: Date;
+    commentedBy: Schema.Types.ObjectId; 
+  }[];
+  user: {
+    type: Schema.Types.ObjectId;
+    ref: string;
+    required: boolean;
+  };
 }
-// ------------------------------------------
 
-
-
-const postSchema = new Schema<typePostSchema>({
+const postSchema = new Schema<typePostSchema>(
+  {
     description: {
-        type: String,   
+      type: String,
     },
     image: {
-        type: String,
+      type: String,
     },
     likes: {
-        type: Number,
-        default: 0
+      type: Number,
+      default: 0,
     },
     likedBy: {
-        type: [Schema.Types.ObjectId],
-        ref: 'User',
+      type: [Schema.Types.ObjectId], 
+      ref: 'User', 
     },
     comments: [
-        {
-            text: String,
-            created: { type: Date, default: Date.now },
-            commentedBy: {
-                type: Schema.Types.ObjectId,
-                ref: 'User',
-            },
+      {
+        text: String,
+        created: { type: Date, default: Date.now },
+        commentedBy: {
+          type: Schema.Types.ObjectId,  
+          ref: 'User',  
         },
+      },
     ],
     user: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
+      type: Schema.Types.ObjectId,  
+      ref: 'User',  
+      required: true,
     },
-}, { timestamps: true });
+  },
+  { timestamps: true }
+);
 
 const Post = model<typePostSchema>('Post', postSchema);
 

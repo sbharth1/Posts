@@ -47,7 +47,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             });
             return;
         }
-        const token = (0, jwt_1.generateToken)(email);
+        const token = (0, jwt_1.generateToken)(user._id.toString());
         res.status(200).json({
             message: 'Login successful',
             token,
