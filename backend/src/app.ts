@@ -67,6 +67,7 @@ app.post(
         description,
         image: imageUrl,
         likes: 0,
+        commentsNo: 0,
         likedBy: [],
         comments: [],
         user:userId,

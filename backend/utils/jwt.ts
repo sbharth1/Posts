@@ -13,7 +13,6 @@ if (!SECRET_KEY) {
 };
 
  const verifyToken = (req:Request,res:Response,next:NextFunction)=>{
-  console.log(req.headers,'----req.headers from verifyToken----------')
   try{
     const token = req.headers['authorization']?.split(' ')[1];
     
@@ -21,11 +20,8 @@ if (!SECRET_KEY) {
        res.status(403).json({"message":"No Token Provided"});
        return;
     }
-    console.log('---token111')
     const decoded = jwt.verify(token,SECRET_KEY) as {userId:string};
-    console.log(decoded,'---decoded')
     req.user = {userId:decoded.userId};
-    console.log('---token222')
     next()
   }catch(err){
    res.status(500).json({"message":"server error"});

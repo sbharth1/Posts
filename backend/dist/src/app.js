@@ -66,6 +66,7 @@ app.post('/posts', jwt_1.verifyToken, upload.single('image'), (req, res) => __aw
             description,
             image: imageUrl,
             likes: 0,
+            commentsNo: 0,
             likedBy: [],
             comments: [],
             user: userId,

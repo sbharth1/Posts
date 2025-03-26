@@ -4,6 +4,7 @@ interface typePostSchema {
   description: string;
   image: string;
   likes: number;
+  commentsNo: number;
   likedBy: { type: Schema.Types.ObjectId[]; ref: string };  
   comments: {
     text: string;
@@ -32,6 +33,10 @@ const postSchema = new Schema<typePostSchema>(
     likedBy: {
       type: [Schema.Types.ObjectId], 
       ref: 'User', 
+    },
+    commentsNo: {
+      type: Number,
+      default: 0,
     },
     comments: [
       {
