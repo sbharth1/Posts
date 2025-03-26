@@ -20,19 +20,18 @@ const fs_1 = __importDefault(require("fs"));
 const postSchema_1 = __importDefault(require("../db/models/postSchema"));
 const jwt_1 = require("../utils/jwt");
 const app = (0, express_1.default)();
-// CORS setup
 app.use((0, cors_1.default)({
-    origin: 'http://localhost:4200',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    origin: "http://localhost:4200",
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ["Content-Type", "Authorization"],
 }));
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
-app.use('/', router_1.default);
+app.use("/", router_1.default);
 // For image upload route----------------------------------------
-app.use('/uploads', express_1.default.static(path_1.default.join(__dirname, '../uploads')));
-const uploadsDir = path_1.default.join(__dirname, '../uploads/images/');
+app.use("/uploads", express_1.default.static(path_1.default.join(__dirname, "../uploads")));
+const uploadsDir = path_1.default.join(__dirname, "../uploads/images/");
 if (!fs_1.default.existsSync(uploadsDir)) {
     fs_1.default.mkdirSync(uploadsDir, { recursive: true });
 }
@@ -45,20 +44,18 @@ const storage = multer_1.default.diskStorage({
     },
 });
 const upload = (0, multer_1.default)({ storage: storage });
-app.post('/posts', jwt_1.verifyToken, upload.single('image'), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post("/posts", jwt_1.verifyToken, upload.single("image"), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
         const { description } = req.body;
         const image = req.file;
         const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId;
-        console.log(userId, '---userId');
-        console.log(description, '---description');
         if (!userId) {
-            res.status(400).json({ message: 'User ID not found' });
+            res.status(400).json({ message: "User ID not found" });
             return;
         }
         if (!description || !image) {
-            res.status(400).json({ message: 'Description and image are required' });
+            res.status(400).json({ message: "Description and image are required" });
             return;
         }
         const imageUrl = `/uploads/images/${image.filename}`;
@@ -74,11 +71,12 @@ app.post('/posts', jwt_1.verifyToken, upload.single('image'), (req, res) => __aw
         const savedPost = yield newPost.save();
         res
             .status(200)
-            .json({ message: 'Post added successfully', post: savedPost });
+            .json({ message: "Post added successfully", post: savedPost });
+        return;
     }
     catch (err) {
-        console.error('Error saving post:', err);
-        res.status(500).json({ message: 'Internal server error' });
+        console.error("Error saving post:", err);
+        res.status(500).json({ message: "Internal server error" });
     }
 }));
 module.exports = app;
