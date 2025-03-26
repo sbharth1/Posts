@@ -17,6 +17,7 @@ const router_1 = __importDefault(require("../routes/router"));
 const multer_1 = __importDefault(require("multer"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
+const postSchema_1 = __importDefault(require("../db/models/postSchema"));
 const app = (0, express_1.default)();
 // CORS setup
 app.use((0, cors_1.default)({
@@ -44,17 +45,30 @@ const storage = multer_1.default.diskStorage({
 });
 const upload = (0, multer_1.default)({ storage: storage });
 app.post('/posts', upload.single('image'), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { description } = req.body;
-    const image = req.file;
-    if (!description || !image) {
-        res.status(400).json({ message: 'Description and image are required' });
-        return;
+    try {
+        const { description, user } = req.body;
+        const image = req.file;
+        if (!description || !image) {
+            res.status(400).json({ message: 'Description and image are required' });
+            return;
+        }
+        const imageUrl = `/uploads/images/${image.filename}`;
+        const newPost = new postSchema_1.default({
+            description,
+            image: imageUrl,
+            likes: 0,
+            likedBy: [],
+            comments: [],
+            user,
+        });
+        const savedPost = yield newPost.save();
+        res
+            .status(200)
+            .json({ message: 'Post added successfully', post: savedPost });
     }
-    const imageUrl = `/uploads/images/${image.filename}`;
-    const newPost = {
-        description,
-        imageUrl,
-    };
-    res.status(200).json({ message: 'Post added successfully', post: newPost });
+    catch (err) {
+        console.error('Error saving post:', err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
 }));
 module.exports = app;

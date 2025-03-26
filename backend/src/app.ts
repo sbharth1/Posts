@@ -5,6 +5,7 @@ import multer from 'multer';
 import path from 'path';
 import { Request, Response } from 'express';
 import fs from 'fs';
+import Post from '../db/models/postSchema';
 const app = express();
 
 // CORS setup
@@ -44,23 +45,34 @@ app.post(
   '/posts',
   upload.single('image'),
   async (req: Request, res: Response) => {
-    const { description } = req.body;
-    const image = req.file;
+    try {
+      const { description, user } = req.body;
+      const image = req.file;
 
-    if (!description || !image) {
-      res.status(400).json({ message: 'Description and image are required' });
-      return;
+      if (!description || !image) {
+        res.status(400).json({ message: 'Description and image are required' });
+        return;
+      }
+      const imageUrl = `/uploads/images/${image.filename}`;
+
+      const newPost = new Post({
+        description,
+        image: imageUrl,
+        likes: 0,
+        likedBy: [],
+        comments: [],
+        user,
+      });
+
+      const savedPost = await newPost.save();
+      res
+        .status(200)
+        .json({ message: 'Post added successfully', post: savedPost });
+    } catch (err) {
+      console.error('Error saving post:', err);
+      res.status(500).json({ message: 'Internal server error' });
     }
-    const imageUrl = `/uploads/images/${image.filename}`;
-
-    const newPost = {
-      description,
-      imageUrl,
-    };
-
-    res.status(200).json({ message: 'Post added successfully', post: newPost });
   }
 );
 
 export = app;
-
