@@ -6,7 +6,7 @@ interface typeUserSchema {
   lastName: string;
   email: string;
   password: string;
-  posts: string[];
+  posts: Schema.Types.ObjectId[];
 }
 
 const userSchema = new Schema<typeUserSchema>(
@@ -32,7 +32,8 @@ const userSchema = new Schema<typeUserSchema>(
     posts: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'post',
+        ref: 'Post',
+        required: true,
       },
     ],
   },

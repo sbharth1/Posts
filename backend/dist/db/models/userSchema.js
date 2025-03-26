@@ -34,7 +34,8 @@ const userSchema = new mongoose_1.Schema({
     posts: [
         {
             type: mongoose_1.Schema.Types.ObjectId,
-            ref: 'post',
+            ref: 'Post',
+            required: true,
         },
     ],
 }, { timestamps: true });

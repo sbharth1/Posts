@@ -1,62 +1,67 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 
-interface typePostSchema {
-  description: string;
-  image: string;
-  likes: number;
-  commentsNo: number;
-  likedBy: { type: Schema.Types.ObjectId[]; ref: string };  
-  comments: {
+interface IComment {
     text: string;
     created: Date;
-    commentedBy: Schema.Types.ObjectId; 
-  }[];
-  user: {
-    type: Schema.Types.ObjectId;
-    ref: string;
-    required: boolean;
-  };
+    commentedBy: Schema.Types.ObjectId;
 }
 
-const postSchema = new Schema<typePostSchema>(
+interface IPost extends Document {
+    description: string;
+    image: string;
+    likes: number;
+    commentsNo: number;
+    likedBy: Schema.Types.ObjectId[];
+    comments: IComment[];
+    user: Schema.Types.ObjectId;
+}
+
+const postSchema = new Schema<IPost>(
   {
     description: {
       type: String,
+      required: true,
     },
     image: {
       type: String,
+      required: true,
     },
     likes: {
       type: Number,
       default: 0,
     },
-    likedBy: {
-      type: [Schema.Types.ObjectId], 
-      ref: 'User', 
-    },
+    likedBy: [{
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    }],
     commentsNo: {
       type: Number,
       default: 0,
     },
-    comments: [
-      {
-        text: String,
-        created: { type: Date, default: Date.now },
-        commentedBy: {
-          type: Schema.Types.ObjectId,  
-          ref: 'User',  
-        },
+    comments: [{
+      text: {
+        type: String,
+        required: true,
       },
-    ],
+      created: {
+        type: Date,
+        default: Date.now,
+      },
+      commentedBy: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+      },
+    }],
     user: {
-      type: Schema.Types.ObjectId,  
-      ref: 'User',  
+      type: Schema.Types.ObjectId,
+      ref: 'User',
       required: true,
     },
   },
   { timestamps: true }
 );
 
-const Post = model<typePostSchema>('Post', postSchema);
+const Post = model<IPost>('Post', postSchema);
 
-export = Post;
+export default Post;

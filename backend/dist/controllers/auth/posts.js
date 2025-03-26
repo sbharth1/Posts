@@ -21,7 +21,14 @@ const getPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(400).json({ message: "User ID not found" });
         return;
     }
-    const posts = yield postSchema_1.default.findById(userId);
-    res.send(posts);
+    try {
+        const posts = yield postSchema_1.default.find();
+        console.log(posts, '---posts');
+        res.status(200).json(userId);
+    }
+    catch (error) {
+        console.error("Error fetching posts:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
 });
 exports.getPosts = getPosts;
