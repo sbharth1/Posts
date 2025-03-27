@@ -100,7 +100,9 @@ export class PostsComponent implements OnInit {
     },
   ];
 
+
   ngOnInit(): void {
+    this.getAllPosts();
     this.allItems = this.items.map((item) => ({ ...item }));
 
     this.modalForm = this.fb.group({
@@ -113,6 +115,29 @@ export class PostsComponent implements OnInit {
     }
   }
 
+
+  // get all posts--------------------------------------
+
+  getAllPosts() {
+    this.http
+      .get('http://localhost:3700/allposts')
+      .pipe(
+        catchError((error) => {
+          this.toastr.error('Failed to fetch posts');
+          console.error('Error fetching posts', error);
+          return error;
+        })
+      )
+      .subscribe((res: any) => {
+        if (res) {
+          console.log(res);
+          this.toastr.success('Posts fetched successfully');
+        } else {
+          this.toastr.error('Failed to fetch posts');
+          console.log('Error: No response data');
+        }
+      });
+  }
   
   // modal open & close code ----------------------------------------
   
