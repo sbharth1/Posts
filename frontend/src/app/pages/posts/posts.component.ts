@@ -78,15 +78,12 @@ export class PostsComponent implements OnInit {
       .get('http://localhost:3700/getposts')
       .pipe(
         catchError((error) => {
-          // this.toastr.error('Failed to fetch posts');
           console.error('Error fetching posts', error);
           return [];
         })
       )
       .subscribe((res: any) => {
         if (res) {
-          console.log(res);
-          // this.toastr.success('Posts fetched successfully');
           this.allItems =res;
         } else {
           this.toastr.error('Failed to fetch posts');
@@ -145,17 +142,14 @@ export class PostsComponent implements OnInit {
               .post('http://localhost:3700/posts', formData,{headers})
               .pipe(
                 catchError((error) => {
-                  // this.toastr.error('Post failed');
                   console.error('Post error', error);
                   return error;
                 })
               )
               .subscribe((res: any) => {
                 if (res) {
-                  console.log(res);
-                  // this.toastr.success('Post added successfully');
+                  this.getAllPosts()
                 } else {
-                  // this.toastr.error('Post failed');
                   console.log('Error: No response data');
                 }
               });
