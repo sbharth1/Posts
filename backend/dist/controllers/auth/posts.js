@@ -22,7 +22,7 @@ const getPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         return;
     }
     try {
-        const posts = yield postSchema_1.default.find();
+        const posts = yield postSchema_1.default.find().populate("user");
         console.log(posts, '---posts');
         res.status(200).json(userId);
     }

@@ -7,6 +7,7 @@ import { Request, Response } from "express";
 import fs from "fs";
 import Post from "../db/models/postSchema";
 import { verifyToken } from "../utils/jwt";
+import User from "../db/models/userSchema";
 const app = express();
 
 app.use(
@@ -71,6 +72,15 @@ app.post(
       });
 
       const savedPost = await newPost.save();
+
+
+      await User.findByIdAndUpdate(
+        userId,
+        {
+          $push: { posts: savedPost._id },  
+        },
+        { new: true } 
+      );
       res
         .status(200)
         .json({ message: "Post added successfully", post: savedPost });

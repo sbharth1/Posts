@@ -19,6 +19,7 @@ const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const postSchema_1 = __importDefault(require("../db/models/postSchema"));
 const jwt_1 = require("../utils/jwt");
+const userSchema_1 = __importDefault(require("../db/models/userSchema"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
     origin: "http://localhost:4200",
@@ -69,6 +70,9 @@ app.post("/posts", jwt_1.verifyToken, upload.single("image"), (req, res) => __aw
             user: userId,
         });
         const savedPost = yield newPost.save();
+        yield userSchema_1.default.findByIdAndUpdate(userId, {
+            $push: { posts: savedPost._id },
+        }, { new: true });
         res
             .status(200)
             .json({ message: "Post added successfully", post: savedPost });
