@@ -14,17 +14,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getPosts = void 0;
 const postSchema_1 = __importDefault(require("../../db/models/postSchema"));
+const connect_1 = __importDefault(require("../../db/config/connect"));
 const getPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
-    const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId;
-    if (!userId) {
-        res.status(400).json({ message: "User ID not found" });
-        return;
-    }
     try {
+        yield (0, connect_1.default)();
         const posts = yield postSchema_1.default.find();
-        console.log(posts, '---posts');
-        console.log(userId, '--userId');
+        if (!posts || posts.length === 0) {
+            res.status(404).json({ message: "No posts found" });
+            return;
+        }
+        console.log(posts, "---posts");
         res.status(200).json(posts);
         return;
     }

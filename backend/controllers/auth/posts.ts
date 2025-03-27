@@ -1,19 +1,16 @@
 import { Request, Response } from "express";
 import Post from "../../db/models/postSchema";
+import dbConnect from "../../db/config/connect";
 
 export const getPosts = async (req: Request, res: Response) => {
-  const userId = req.user?.userId;
-
-  if (!userId) {
-    res.status(400).json({ message: "User ID not found" });
-    return;
-  }
-
   try {
+    await dbConnect();
     const posts = await Post.find();
-    console.log(posts,'---posts');
-    console.log(userId,'--userId'); 
-
+    if(!posts || posts.length === 0){
+     res.status(404).json({ message: "No posts found" });
+      return;
+    }
+    console.log(posts, "---posts");
     res.status(200).json(posts);
     return;
   } catch (error) {

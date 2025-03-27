@@ -10,7 +10,7 @@ interface IPost extends Document {
     description: string;
     image: string;
     likes: number;
-    commentsNo: number;
+    commentNo: number;
     likedBy: Schema.Types.ObjectId[];
     comments: IComment[];
     user: Schema.Types.ObjectId;
@@ -34,7 +34,7 @@ const postSchema = new Schema<IPost>(
       type: Schema.Types.ObjectId,
       ref: 'User',
     }],
-    commentsNo: {
+    commentNo: {
       type: Number,
       default: 0,
     },
@@ -64,4 +64,4 @@ const postSchema = new Schema<IPost>(
 
 const Post = model<IPost>('Post', postSchema);
 
-export = Post;
+export =  Post;

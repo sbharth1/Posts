@@ -17,7 +17,7 @@ const postSchema = new mongoose_1.Schema({
             type: mongoose_1.Schema.Types.ObjectId,
             ref: 'User',
         }],
-    commentsNo: {
+    commentNo: {
         type: Number,
         default: 0,
     },

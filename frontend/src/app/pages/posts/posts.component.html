@@ -35,6 +35,11 @@
   <!-- Post Section -->
   <div class="container mt-5">
     <div class="row d-flex justify-content-center">
+
+      <div *ngIf="allItems.length === 0" class="col-12 text-center">
+        <p class="text-white">No posts available. Create a post to get started!</p>
+      </div>
+
       <!-- Post Card Loop -->
       <div class="col-md-4 mb-4" *ngFor="let item of allItems; let i = index">
         <div class="card mx-auto" style="width: 100%; margin-bottom: 20px">
@@ -48,12 +53,12 @@
           <div class="card-body">
             <div class="d-flex">
               <mat-icon>thumb_up</mat-icon>
-              <p class="ms-1 ps-1">{{ item.like }}</p>
+              <p class="ms-1 ps-1">{{ item.likes }}</p>
               <mat-icon class="ms-3">comment</mat-icon>
-              <p class="ms-1 ps-1">{{ item.comment }}</p>
+              <p class="ms-1 ps-1">{{ item.commentNo }}</p>
             </div>
             <p class="card-text">
-              {{ item.content }}
+              {{ item.description }}
             </p>
           </div>
         </div>
@@ -63,52 +68,47 @@
   </div>
   <!-- Post Section End -->
 
-
-
-
-  <!-- modal -->
+  <!-- Modal -->
   <ng-template #content let-modal>
     <div class="container"> 
       <form [formGroup]="modalForm" (ngSubmit)="onAddPost()">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5">Add Post</h1>
-        <button
-          type="button"
-          class="btn-close"
-          aria-label="Close"
-          (click)="modal.dismiss()"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <div class="col-md-3">
-          <input
-            type="file"
-            class="rounded file-upload"
-            (change)="onFileChange($event)"
-            size="20"
-            accept="image/*"
-            formControlName="image"
-          />
+        <div class="modal-header">
+          <h1 class="modal-title fs-5">Add Post</h1>
+          <button
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            (click)="modal.dismiss()"
+          ></button>
         </div>
-        <div class="col-md-3 textareainput fs-5 mt-4">
-          <input
-            class="p-2 textareainput rounded"
-            type="text"
-            formControlName="description"
-            placeholder="description"
-          />
+        <div class="modal-body">
+          <div class="col-md-3">
+            <input
+              type="file"
+              class="rounded file-upload"
+              (change)="onFileChange($event)"
+              size="20"
+              accept="image/*"
+              formControlName="image"
+            />
+          </div>
+          <div class="col-md-3 textareainput fs-5 mt-4">
+            <input
+              class="p-2 textareainput rounded"
+              type="text"
+              formControlName="description"
+              placeholder="description"
+            />
+          </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">
-          Close
-        </button>
-        <button type="submit" class="btn btn-primary">Add Post</button>
-      </div>
-    </form>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">
+            Close
+          </button>
+          <button type="submit" class="btn btn-primary">Add Post</button>
+        </div>
+      </form>
     </div>
   </ng-template>
-  <!-- modal end -->
-
-
+  <!-- Modal End -->
 </main>

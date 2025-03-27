@@ -1,8 +1,8 @@
 export class Item {
     constructor(
-      public like: number,
-      public comment:number,
-      public content: string
+      public likes: number,
+      public commentNo:number,
+      public description: string
     ) {}
   }
   

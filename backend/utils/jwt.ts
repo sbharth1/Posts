@@ -22,7 +22,7 @@ if (!SECRET_KEY) {
     }
     const decoded = jwt.verify(token,SECRET_KEY) as {userId:string};
     req.user = {userId:decoded.userId};
-    next()
+    next();
   }catch(err){
    res.status(500).json({"message":"server error"});
    return;
