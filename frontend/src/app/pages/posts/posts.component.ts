@@ -78,7 +78,7 @@ export class PostsComponent implements OnInit {
       .get('http://localhost:3700/getposts')
       .pipe(
         catchError((error) => {
-          this.toastr.error('Failed to fetch posts');
+          // this.toastr.error('Failed to fetch posts');
           console.error('Error fetching posts', error);
           return [];
         })
@@ -86,7 +86,7 @@ export class PostsComponent implements OnInit {
       .subscribe((res: any) => {
         if (res) {
           console.log(res);
-          this.toastr.success('Posts fetched successfully');
+          // this.toastr.success('Posts fetched successfully');
           this.allItems =res;
         } else {
           this.toastr.error('Failed to fetch posts');
@@ -140,9 +140,9 @@ export class PostsComponent implements OnInit {
             const formData = new FormData();
             formData.append('description', this.modalForm.get('description')?.value);
             formData.append('image', this.modalForm.get('image')?.value);
-        
+            const headers =  { Authorization: `Bearer ${this.token}` };
             this.http
-              .post('http://localhost:3700/posts', formData)
+              .post('http://localhost:3700/posts', formData,{headers})
               .pipe(
                 catchError((error) => {
                   // this.toastr.error('Post failed');

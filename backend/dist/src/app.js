@@ -55,6 +55,7 @@ app.post("/posts", jwt_1.verifyToken, upload.single("image"), (req, res) => __aw
             res.status(400).json({ message: "User ID not found" });
             return;
         }
+        console.log(userId, '--------------userId');
         if (!description || !image) {
             res.status(400).json({ message: "Description and image are required" });
             return;
@@ -69,7 +70,9 @@ app.post("/posts", jwt_1.verifyToken, upload.single("image"), (req, res) => __aw
             comments: [],
             user: userId,
         });
+        console.log(description, '---------description');
         const savedPost = yield newPost.save();
+        console.log('---after description');
         yield userSchema_1.default.findByIdAndUpdate(userId, {
             $push: { posts: savedPost._id },
         }, { new: true });

@@ -55,6 +55,7 @@ app.post(
         res.status(400).json({ message: "User ID not found" });
         return;
       }
+      console.log(userId,'--------------userId')
       if (!description || !image) {
         res.status(400).json({ message: "Description and image are required" });
         return;
@@ -71,9 +72,11 @@ app.post(
         user: userId,
       });
 
+      console.log(description,'---------description')
+
       const savedPost = await newPost.save();
 
-
+console.log('---after description')
       await User.findByIdAndUpdate(
         userId,
         {
@@ -81,6 +84,7 @@ app.post(
         },
         { new: true } 
       );
+
       res
         .status(200)
         .json({ message: "Post added successfully", post: savedPost });

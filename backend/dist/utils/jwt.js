@@ -18,11 +18,14 @@ exports.generateToken = generateToken;
 const verifyToken = (req, res, next) => {
     var _a;
     try {
+        console.log('check ----1');
         const token = (_a = req.headers['authorization']) === null || _a === void 0 ? void 0 : _a.split(' ')[1];
+        console.log('check -----2');
         if (!token) {
             res.status(403).json({ "message": "No Token Provided" });
             return;
         }
+        console.log('check --------------3');
         const decoded = jsonwebtoken_1.default.verify(token, SECRET_KEY);
         req.user = { userId: decoded.userId };
         next();
