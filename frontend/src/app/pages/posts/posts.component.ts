@@ -119,19 +119,23 @@ export class PostsComponent implements OnInit {
   // get all posts--------------------------------------
 
   getAllPosts() {
+    const headers = {
+       'Authorization': `Bearer ${this.token}`
+    }
     this.http
-      .get('http://localhost:3700/allposts')
+      .get('http://localhost:3700/allposts',{headers})
       .pipe(
         catchError((error) => {
           this.toastr.error('Failed to fetch posts');
           console.error('Error fetching posts', error);
-          return error;
+          return [];
         })
       )
       .subscribe((res: any) => {
         if (res) {
           console.log(res);
           this.toastr.success('Posts fetched successfully');
+          this.allItems =res;
         } else {
           this.toastr.error('Failed to fetch posts');
           console.log('Error: No response data');

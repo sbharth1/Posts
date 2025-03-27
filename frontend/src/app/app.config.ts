@@ -8,13 +8,14 @@ import {
   withEventReplay,
 } from '@angular/platform-browser';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { tokenInterceptor } from './interceptor/token/token.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
-    provideHttpClient(withFetch()),
+    provideHttpClient(withInterceptors([tokenInterceptor]),withFetch()),
     provideAnimations(),
     provideToastr({
       timeOut: 3000,
