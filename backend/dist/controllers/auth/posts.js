@@ -22,9 +22,11 @@ const getPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         return;
     }
     try {
-        const posts = yield postSchema_1.default.find().populate("user");
+        const posts = yield postSchema_1.default.find();
         console.log(posts, '---posts');
-        res.status(200).json(userId);
+        console.log(userId, '--userId');
+        res.status(200).json(posts);
+        return;
     }
     catch (error) {
         console.error("Error fetching posts:", error);

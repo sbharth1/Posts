@@ -10,10 +10,12 @@ export const getPosts = async (req: Request, res: Response) => {
   }
 
   try {
-    const posts = await Post.find().populate("user");
-    console.log(posts,'---posts'); 
+    const posts = await Post.find();
+    console.log(posts,'---posts');
+    console.log(userId,'--userId'); 
 
-    res.status(200).json(userId);
+    res.status(200).json(posts);
+    return;
   } catch (error) {
     console.error("Error fetching posts:", error);
     res.status(500).json({ message: "Internal server error" });
