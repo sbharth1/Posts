@@ -84,11 +84,9 @@ export class PostsComponent implements OnInit {
       )
       .subscribe((res: any) => {
         if (res) {
-          this.allItems =res;
+        this.allItems =res;
         } else {
-          this.toastr.error('Failed to fetch posts');
-          console.log('Error: No response data');
-        }
+          console.log('Error: No response data');        }  
       });
   }
   
@@ -142,13 +140,15 @@ export class PostsComponent implements OnInit {
               .post('http://localhost:3700/posts', formData,{headers})
               .pipe(
                 catchError((error) => {
+                  this.toastr.error('Post failed pls login user...');
                   console.error('Post error', error);
                   return error;
                 })
               )
               .subscribe((res: any) => {
                 if (res) {
-                  this.getAllPosts()
+                  this.toastr.success("Post created successfully")
+                  this.getAllPosts();
                 } else {
                   console.log('Error: No response data');
                 }

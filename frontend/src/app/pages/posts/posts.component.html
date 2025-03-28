@@ -20,6 +20,9 @@
         <button *ngIf="token" class="btn btn-outline-dark" (click)="onLogOut()">
           LogOut
         </button>
+        <button *ngIf="token" class="btn btn-outline-dark ms-2">
+          Profile
+        </button>
         <button
           *ngIf="!token"
           class="btn btn-outline-dark"
@@ -44,7 +47,7 @@
       <div class="col-md-4 mb-4" *ngFor="let item of allItems; let i = index">
         <div class="card mx-auto" style="width: 100%; margin-bottom: 20px">
           <img
-            src="https://img.freepik.com/premium-photo/fun-pig-animation_183364-21771.jpg?w=1380"
+          [src]="'http://localhost:3700' + item.image"
             class="card-img-top"
             height="200px"
             alt="Fun animated pig character"

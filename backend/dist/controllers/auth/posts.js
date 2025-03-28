@@ -20,10 +20,9 @@ const getPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         yield (0, connect_1.default)();
         const posts = yield postSchema_1.default.find();
         if (!posts || posts.length === 0) {
-            res.status(404).json({ message: "No posts found" });
+            res.status(204).json({ message: "No posts found" });
             return;
         }
-        console.log(posts, "---posts");
         res.status(200).json(posts);
         return;
     }
