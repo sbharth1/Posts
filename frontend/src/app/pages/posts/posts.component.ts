@@ -77,21 +77,16 @@ export class PostsComponent implements OnInit {
     this.http
       .get('http://localhost:3700/getposts')
       .pipe(
-        catchError((error) => {
-          // this.toastr.error('Failed to fetch posts');
+        catchError((error) => { 
           console.error('Error fetching posts', error);
           return [];
         })
       )
       .subscribe((res: any) => {
         if (res) {
-          console.log(res);
-          // this.toastr.success('Posts fetched successfully');
-          this.allItems =res;
+          this.allItems = res;
         } else {
-          this.toastr.error('Failed to fetch posts');
-          console.log('Error: No response data');
-        }
+          console.log('Error: No response data');        }
       });
   }
   
@@ -145,7 +140,7 @@ export class PostsComponent implements OnInit {
               .post('http://localhost:3700/posts', formData,{headers})
               .pipe(
                 catchError((error) => {
-                  // this.toastr.error('Post failed');
+                  this.toastr.error('user not authenticate pls login');
                   console.error('Post error', error);
                   return error;
                 })
@@ -153,9 +148,10 @@ export class PostsComponent implements OnInit {
               .subscribe((res: any) => {
                 if (res) {
                   console.log(res);
-                  // this.toastr.success('Post added successfully');
+                  this.getAllPosts();
+                  this.toastr.success('Post added successfully');
                 } else {
-                  // this.toastr.error('Post failed');
+                  this.toastr.error('Post failed');
                   console.log('Error: No response data');
                 }
               });

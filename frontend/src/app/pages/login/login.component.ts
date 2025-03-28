@@ -34,21 +34,21 @@ export class LoginComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
-
+  
   onSubmit(): void {
     if (this.myForm.valid) {
       this.isLoading = true;
       const formData = this.myForm.value;
 
-
       this.http
         .post('http://localhost:3700/login', formData)
         .pipe(
-          catchError((error) => {
+          catchError((error: any) => {
             this.isLoading = false;
-            this.toastr.error('Login failed');
+            const errorMessage = error?.error?.message || 'An error occurred';
+            this.toastr.error(errorMessage);
             console.error('Login error', error);
-            return error;
+            return [];
           })
         )
         .subscribe((res: any) => {
@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
         });
     } else {
       this.isLoading = false;
-      this.toastr.warning('Please fields are required fields');
+      this.toastr.warning('Please fill in all required fields');
     }
   }
 
