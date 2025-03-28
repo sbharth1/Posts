@@ -45,14 +45,15 @@
 
       <!-- Post Card Loop -->
       <div class="col-md-4 mb-4" *ngFor="let item of allItems; let i = index">
-        <div class="card mx-auto" style="width: 100%; margin-bottom: 20px">
+        <div class="card mx-auto" style="width: 100%; margin-bottom: 10px">
+          <div class="imagediv">
           <img
           [src]="'http://localhost:3700' + item.image"
             class="card-img-top"
-            height="200px"
+            max-height="200px"
             alt="Fun animated pig character"
-            style="border-bottom: 1px solid #000"
           />
+        </div>
           <div class="card-body">
             <div class="d-flex">
               <mat-icon>thumb_up</mat-icon>
