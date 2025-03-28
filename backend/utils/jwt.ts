@@ -9,8 +9,9 @@ if (!SECRET_KEY) {
 }
 
  const generateToken = (userId: string) => {
-  return jwt.sign({ userId }, SECRET_KEY, { expiresIn: '1h' });
+  return jwt.sign({ userId }, SECRET_KEY, { expiresIn: '24h' });
 };
+
 
  const verifyToken = (req:Request,res:Response,next:NextFunction)=>{
   try{

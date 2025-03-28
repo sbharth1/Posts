@@ -12,7 +12,7 @@ if (!SECRET_KEY) {
     console.log('secret_key is undefined...');
 }
 const generateToken = (userId) => {
-    return jsonwebtoken_1.default.sign({ userId }, SECRET_KEY, { expiresIn: '1h' });
+    return jsonwebtoken_1.default.sign({ userId }, SECRET_KEY, { expiresIn: '24h' });
 };
 exports.generateToken = generateToken;
 const verifyToken = (req, res, next) => {
