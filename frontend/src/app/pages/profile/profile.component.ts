@@ -14,7 +14,6 @@ import { Router } from '@angular/router';
 export class ProfileComponent implements OnInit {
   http = inject(HttpClient);
   token: string | null = null;
-
   user: Users | null = null;
 
   constructor(

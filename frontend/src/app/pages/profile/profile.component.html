@@ -8,25 +8,15 @@
             <div class="card-body">
               <!-- Profile Header -->
               <div class="mb-4">
-                <img
-                  src="image"
-                  alt="Profile Image"
-                  class="rounded-circle mb-3 profile-image"
-                  width="150"
-                  height="150"
-                />
-                <h1 class="h3 font-weight-bold">user?.firstName</h1>
+                <div *ngIf="user?.firstName" class="rounded-circle mb-3 profile-image" style="width: 150px; height: 150px; display: flex; justify-content: center; align-items: center; font-size: 2rem; background-color: #007bff; color: white;">
+                  <span>{{ user?.firstName?.charAt(0)?.toUpperCase()}} </span>
+                </div>
+                <h1 class="h3 font-weight-bold">{{ user?.firstName }} {{ user?.lastName }}</h1>
               </div>
 
               <!-- Profile Info -->
               <div class="mb-4">
-                <h5>Email:</h5>
-                <p>user.email</p>
-              </div>
-
-              <div>
-                <h5>Bio:</h5>
-                <p>user.bio</p>
+                <h5>Email: {{user?.email}}</h5>
               </div>
             </div>
           </div>
@@ -42,20 +32,18 @@
 
       <!-- Displaying Posts Dynamically -->
       <div class="row">
-        <div class="col-md-4">
+        <div *ngFor="let post of user?.posts" class="col-md-4">
           <div class="card mb-4 shadow-sm">
-            <img src="user.imageUrl" class="card-img-top" alt="Post image" />
+            <img *ngIf="post.image" [src]="'http://localhost:3700'+post?.image" class="card-img-top" alt="Post image" />
             <div class="card-body">
-              <h5 class="card-title">user.title</h5>
-              <p class="card-text">user.content...</p>
+              <h5 class="card-title"> {{post?.description}} </h5>
               <a href="#" class="btn btn-primary">Read More</a>
             </div>
           </div>
         </div>
-        <!-- Repeat for more posts -->
       </div>
 
-      <!-- no posts -->
+      <!-- No Posts Message -->
       <div *ngIf="user?.posts?.length === 0" class="text-center">
         <p>No posts to display yet.</p>
       </div>
