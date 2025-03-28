@@ -20,7 +20,7 @@
         <button *ngIf="token" class="btn btn-outline-dark" (click)="onLogOut()">
           LogOut
         </button>
-        <button *ngIf="token" class="btn btn-outline-dark ms-2">
+        <button *ngIf="token" class="btn btn-outline-dark ms-2" (click)="navigateProfile()">
           Profile
         </button>
         <button
@@ -50,7 +50,8 @@
           <img
           [src]="'http://localhost:3700' + item.image"
             class="card-img-top"
-            max-height="200px"
+            max-height
+            max-width
             alt="Fun animated pig character"
           />
         </div>
