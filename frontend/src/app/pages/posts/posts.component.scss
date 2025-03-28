@@ -1,29 +1,37 @@
 .textareainput {
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: auto;
 }
 
 .file-upload::file-selector-button {
-    margin-right: 20px;
-    border: none;
-     background-color:#0d6efd; 
-    padding: 10px 20px;
-    border-radius: 10px;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color .2s ease-in-out;
-  }
+  margin-right: 20px;
+  border: none;
+  background-color: #0d6efd;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
 
+main {
+  height: auto;
+}
 
-  main{
-    height: auto;
-  }
+.imagediv {
+  padding: 10px;
+}
 
-  .imagediv{
-    padding: 10px;
-  }
+img {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  border-radius: 5px;
+}
 
-   img {
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-    border-radius: 5px;
-    }
+.navbar{
+  background-color: #533483 !important;
+}
+
+.navbar-brand {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  
+}

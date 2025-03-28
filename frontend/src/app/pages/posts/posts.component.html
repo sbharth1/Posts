@@ -1,8 +1,8 @@
 <main class="bg-dark">
   <!-- Navbar Section -->
-  <nav class="navbar bg-success">
+  <nav class="navbar">
     <div class="container-fluid">
-      <a class="navbar-brand fw-bolder text-white" href="#">Navbar</a>
+      <a class="navbar-brand fw-bold text-white" href="#">Navbar</a>
       <form class="d-flex" role="search">
         <input
           class="form-control me-2"
@@ -10,22 +10,35 @@
           placeholder="Search"
           aria-label="Search"
         />
-        <button class="btn btn-outline-dark" type="submit">Search</button>
+        <button class="btn btn-outline-dark text-light" type="submit">
+          Search
+        </button>
       </form>
       <div>
-        <button class="btn btn-outline-dark me-2" (click)="open(content)">
+        <button
+          class="btn btn-outline-dark me-2 text-light"
+          (click)="open(content)"
+        >
           Add Post
         </button>
 
-        <button *ngIf="token" class="btn btn-outline-dark" (click)="onLogOut()">
+        <button
+          *ngIf="token"
+          class="btn btn-outline-dark text-light"
+          (click)="onLogOut()"
+        >
           LogOut
         </button>
-        <button *ngIf="token" class="btn btn-outline-dark ms-2" (click)="navigateProfile()">
+        <button
+          *ngIf="token"
+          class="btn btn-outline-dark ms-2 text-light"
+          (click)="navigateProfile()"
+        >
           Profile
         </button>
         <button
           *ngIf="!token"
-          class="btn btn-outline-dark"
+          class="btn btn-outline-dark text-light"
           (click)="navigateToSignIn()"
         >
           SignIn
@@ -38,23 +51,24 @@
   <!-- Post Section -->
   <div class="container mt-5">
     <div class="row d-flex justify-content-center">
-
       <div *ngIf="allItems.length === 0" class="col-12 text-center fs-5">
-        <p class="text-white">No posts available. Create a post to get started!</p>
+        <p class="text-white">
+          No posts available. Create a post to get started!
+        </p>
       </div>
 
       <!-- Post Card Loop -->
       <div class="col-md-4 mb-4" *ngFor="let item of allItems; let i = index">
         <div class="card mx-auto" style="width: 100%; margin-bottom: 10px">
           <div class="imagediv">
-          <img
-          [src]="'http://localhost:3700' + item.image"
-            class="card-img-top"
-            max-height
-            max-width
-            alt="Fun animated pig character"
-          />
-        </div>
+            <img
+              [src]="'http://localhost:3700' + item.image"
+              class="card-img-top"
+              max-height
+              max-width
+              alt="Fun animated pig character"
+            />
+          </div>
           <div class="card-body">
             <div class="d-flex">
               <mat-icon>thumb_up</mat-icon>
@@ -75,7 +89,7 @@
 
   <!-- Modal -->
   <ng-template #content let-modal>
-    <div class="container"> 
+    <div class="container">
       <form [formGroup]="modalForm" (ngSubmit)="onAddPost()">
         <div class="modal-header">
           <h1 class="modal-title fs-5">Add Post</h1>
@@ -107,7 +121,11 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="modal.dismiss()"
+          >
             Close
           </button>
           <button type="submit" class="btn btn-primary">Add Post</button>
