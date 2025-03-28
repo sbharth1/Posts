@@ -1,66 +1,64 @@
 <section class="profile">
-    <!-- Profile Card -->
-    <div class="profile-card">
-      <div class="container py-5">
-        <div class="row justify-content-center">
-          <div class="col-md-6 text-center">
-            <div class="card shadow-lg profile-card">
-              <div class="card-body">
-                <!-- Profile Header -->
-                <div class="mb-4">
-                  <img
-                    [src]="user.profileImage"
-                    alt="Profile Image"
-                    class="rounded-circle mb-3 profile-image"
-                    width="150"
-                    height="150"
-                  />
-                  <h1 class="h3 font-weight-bold">{{ user.name }}</h1>
-                  <p class="text-muted">{{ user.username }}</p>
-                </div>
-  
-                <!-- Profile Info -->
-                <div class="mb-4">
-                  <h5>Email:</h5>
-                  <p>{{ user.email }}</p>
-                </div>
-  
-                <div>
-                  <h5>Bio:</h5>
-                  <p>{{ user.bio }}</p>
-                </div>
+  <!-- Profile Card -->
+  <div class="profile-card">
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+          <div class="card shadow-lg profile-card">
+            <div class="card-body">
+              <!-- Profile Header -->
+              <div class="mb-4">
+                <img
+                  src="image"
+                  alt="Profile Image"
+                  class="rounded-circle mb-3 profile-image"
+                  width="150"
+                  height="150"
+                />
+                <h1 class="h3 font-weight-bold">user?.firstName</h1>
+              </div>
+
+              <!-- Profile Info -->
+              <div class="mb-4">
+                <h5>Email:</h5>
+                <p>user.email</p>
+              </div>
+
+              <div>
+                <h5>Bio:</h5>
+                <p>user.bio</p>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  
-    <!-- Profile Posts Section -->
-    <div class="profile-posts mt-5">
-      <div class="container">
-        <h2 class="text-center mb-4">User Posts</h2>
-  
-        <!-- Displaying Posts Dynamically -->
-        <div class="row">
-          <div class="col-md-4">
-            <div class="card mb-4 shadow-sm">
-              <img [src]="user.imageUrl" class="card-img-top" alt="Post image" />
-              <div class="card-body">
-                <h5 class="card-title">{{ user.title }}</h5>
-                <p class="card-text">{{ user.content}}...</p>
-                <a href="#" class="btn btn-primary">Read More</a>
-              </div>
+  </div>
+
+  <!-- Profile Posts Section -->
+  <div class="profile-posts mt-5">
+    <div class="container">
+      <h2 class="text-center mb-4">User Posts</h2>
+
+      <!-- Displaying Posts Dynamically -->
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+            <img src="user.imageUrl" class="card-img-top" alt="Post image" />
+            <div class="card-body">
+              <h5 class="card-title">user.title</h5>
+              <p class="card-text">user.content...</p>
+              <a href="#" class="btn btn-primary">Read More</a>
             </div>
           </div>
-          <!-- Repeat for more posts -->
         </div>
-  
-        <!-- no posts -->
-        <!-- <div class="text-center">
-          <p>No posts to display yet.</p>
-        </div> -->
+        <!-- Repeat for more posts -->
+      </div>
+
+      <!-- no posts -->
+      <div *ngIf="user?.posts?.length === 0" class="text-center">
+        <p>No posts to display yet.</p>
       </div>
     </div>
-  </section>
-  
+  </div>
+</section>
