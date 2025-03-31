@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-profile',
-  imports: [CommonModule,MatIconModule],
+  imports: [CommonModule, MatIconModule],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
 })
@@ -33,10 +33,14 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+   toggleDescription(post:any): void {
+      post.isDescriptionExpanded = !post.isDescriptionExpanded;
+    }
+    
   toGetUserPosts() {
     const headers = { Authorization: `Bearer ${this.token}` };
 
-    this.http                                                 
+    this.http
       .get<Users>('http://localhost:3700/userpost', { headers })
       .pipe(
         catchError((error) => {
@@ -45,7 +49,15 @@ export class ProfileComponent implements OnInit {
         })
       )
       .subscribe((response) => {
-        this.user = response;
+        if (response) {
+          this.user = {
+            ...response,
+            posts: response.posts.map((post: any) => ({
+              ...post,
+              isDescriptionExpanded: false, 
+            })),
+          };
+        }
         console.log('User posts:', response);
       });
   }

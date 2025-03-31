@@ -56,7 +56,6 @@
               alt="Post image"
             />
             <div class="card-body">
-              <h5 class="card-title">{{ post?.description }}</h5>
               <div class="d-flex">
                 <mat-icon>thumb_up</mat-icon>
                 <p class="ms-1 ps-1">{{ post?.likes }}</p>
@@ -64,6 +63,25 @@
                 <p class="ms-1 ps-1">{{ post?.commentNo }}</p>
 
                 <mat-icon class="ms-3">delete</mat-icon>
+              </div>
+              <div class="description-div">
+                <p
+                  class="card-text"
+                  *ngIf="!post.isDescriptionExpanded"
+                  [class.truncated-text]="!post.isDescriptionExpanded"
+                >
+                  {{ post.description }}
+                </p>
+                <p class="card-text" *ngIf="post.isDescriptionExpanded">
+                  {{ post.description }}
+                </p>
+                <button
+                  *ngIf="post.description.length > 100"
+                  (click)="toggleDescription(post)"
+                  class="btn btn-link text-primary"
+                >
+                  {{ post.isDescriptionExpanded ? "Show Less" : "Show More" }}
+                </button>
               </div>
             </div>
           </div>

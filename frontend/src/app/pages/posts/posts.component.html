@@ -76,6 +76,7 @@
               <mat-icon class="ms-3">comment</mat-icon>
               <p class="ms-1 ps-1">{{ item.commentNo }}</p>
             </div>
+            <div class="content">
             <p class="card-text" *ngIf="!item.isDescriptionExpanded" [class.truncated-text]="!item.isDescriptionExpanded">
               {{ item.description }}
             </p>
@@ -87,8 +88,9 @@
               (click)="toggleDescription(item)"
               class="btn btn-link text-primary"
             >
-              {{ item.isDescriptionExpanded ? "Show Less" : "..." }}
+              {{ item.isDescriptionExpanded ? "Show Less" : "Show More" }}
             </button>
+          </div>
           </div>
         </div>
       </div>

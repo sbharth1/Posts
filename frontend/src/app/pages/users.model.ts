@@ -1,3 +1,4 @@
+
 export class Posts {
     constructor(
       public description: string,
@@ -7,6 +8,7 @@ export class Posts {
       public commentNo: number,
       public comments: string[],
       public user: string,
+      public isDescriptionExpanded?: boolean,
     ) {}
   }
   
@@ -15,7 +17,7 @@ export class Posts {
       public firstName: string,
       public lastName: string,
       public email: string,
-      public posts: Posts[]
+      public posts: Posts[],
     ) {}
   }
   
