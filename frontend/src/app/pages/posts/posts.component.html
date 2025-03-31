@@ -65,7 +65,7 @@
               [src]="'http://localhost:3700' + item.image"
               class="card-img-top"
               max-height
-              max-width   
+              max-width
               alt="Fun animated pig character"
             />
           </div>
@@ -76,9 +76,19 @@
               <mat-icon class="ms-3">comment</mat-icon>
               <p class="ms-1 ps-1">{{ item.commentNo }}</p>
             </div>
-            <p class="card-text">
+            <p class="card-text" *ngIf="!item.isDescriptionExpanded" [class.truncated-text]="!item.isDescriptionExpanded">
               {{ item.description }}
             </p>
+            <p class="card-text" *ngIf="item.isDescriptionExpanded">
+              {{ item.description }}
+            </p>
+            <button
+              *ngIf="item.description.length > 100"
+              (click)="toggleDescription(item)"
+              class="btn btn-link text-primary"
+            >
+              {{ item.isDescriptionExpanded ? "Show Less" : "..." }}
+            </button>
           </div>
         </div>
       </div>
@@ -104,6 +114,7 @@
           <div class="col-md-3">
             <input
               type="file"
+              id="fileInput"
               class="rounded file-upload"
               (change)="onFileChange($event)"
               size="20"

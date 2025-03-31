@@ -69,6 +69,10 @@ export class PostsComponent implements OnInit {
   }
 
   // get all posts--------------------------------------
+  toggleDescription(item: Item): void {
+    item.isDescriptionExpanded = !item.isDescriptionExpanded;
+  }
+  
 
   getAllPosts() {
     this.http
@@ -81,7 +85,11 @@ export class PostsComponent implements OnInit {
       )
       .subscribe((res: any) => {
         if (res) {
-          this.allItems = res;
+          
+          this.allItems = res.map((post:any) => ({
+            ...post,
+            isDescriptionExpanded: false
+                    }));
         } else {
           console.log('Error: No response data');
         }
@@ -96,9 +104,11 @@ export class PostsComponent implements OnInit {
       .result.then(
         (result: any) => {
           this.closeResult.set(`Closed with: ${result}`);
+          this.clearFileInput();
         },
         (reason: any) => {
           this.closeResult.set(`Dismissed ${this.getDismissReason(reason)}`);
+          this.clearFileInput()
         }
       );
   }
@@ -114,12 +124,24 @@ export class PostsComponent implements OnInit {
     }
   }
 
+  clearFileInput() {
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = ''; 
+    }
+  
+    this.modalForm.reset();
+    this.modalForm.patchValue({
+      description: null,
+      image: null,
+    });
+  }
+
   //  modal add post code ----------------------------------------
 
   onFileChange(event: any) {
     const file = event.target.files[0];
     if (file) {
-      console.log(file, '---- image file');
       this.modalForm.patchValue({
         image: file,
       });
@@ -132,6 +154,7 @@ export class PostsComponent implements OnInit {
       formData.append('description', this.modalForm.get('description')?.value);
       formData.append('image', this.modalForm.get('image')?.value);
       const headers = { Authorization: `Bearer ${this.token}` };
+  
       this.http
         .post('http://localhost:3700/posts', formData, { headers })
         .pipe(
@@ -148,15 +171,15 @@ export class PostsComponent implements OnInit {
           } else {
             console.log('Error: No response data');
           }
-        });
-
+        }); 
+  
       this.modalForm.reset();
+       this.clearFileInput();
       this.modalService.dismissAll();
     } else {
       this.toastr.error('Both fields are required..');
     }
   }
-
   // end modal code ----------------------------------------
 
 

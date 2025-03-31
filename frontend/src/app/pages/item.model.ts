@@ -4,6 +4,7 @@ export class Item {
       public commentNo:number,
       public description: string,
       public image : string,
+      public isDescriptionExpanded : boolean
     ) {}
   }
   
