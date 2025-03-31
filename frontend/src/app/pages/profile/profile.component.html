@@ -8,15 +8,30 @@
             <div class="card-body">
               <!-- Profile Header -->
               <div class="mb-4">
-                <div *ngIf="user?.firstName" class="rounded-circle mb-3 profile-image" style="width: 150px; height: 150px; display: flex; justify-content: center; align-items: center; font-size: 2rem; background-color: #007bff; color: white;">
-                  <span>{{ user?.firstName?.charAt(0)?.toUpperCase()}} </span>
+                <div
+                  *ngIf="user?.firstName"
+                  class="rounded-circle mb-3 profile-image"
+                  style="
+                    width: 150px;
+                    height: 150px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 2rem;
+                    background-color: #007bff;
+                    color: white;
+                  "
+                >
+                  <span>{{ user?.firstName?.charAt(0)?.toUpperCase() }} </span>
                 </div>
-                <h1 class="h3 font-weight-bold">{{ user?.firstName }} {{ user?.lastName }}</h1>
+                <h1 class="h3 font-weight-bold">
+                  {{ user?.firstName }} {{ user?.lastName }}
+                </h1>
               </div>
 
               <!-- Profile Info -->
               <div class="mb-4">
-                <h5>Email: {{user?.email}}</h5>
+                <h5>Email: {{ user?.email }}</h5>
               </div>
             </div>
           </div>
@@ -34,10 +49,22 @@
       <div class="row">
         <div *ngFor="let post of user?.posts" class="col-md-4">
           <div class="card mb-4 shadow-sm">
-            <img *ngIf="post.image" [src]="'http://localhost:3700'+post?.image" class="card-img-top" alt="Post image" />
+            <img
+              *ngIf="post.image"
+              [src]="'http://localhost:3700' + post?.image"
+              class="card-img-top"
+              alt="Post image"
+            />
             <div class="card-body">
-              <h5 class="card-title"> {{post?.description}} </h5>
-              <a href="#" class="btn btn-primary">Read More</a>
+              <h5 class="card-title">{{ post?.description }}</h5>
+              <div class="d-flex">
+                <mat-icon>thumb_up</mat-icon>
+                <p class="ms-1 ps-1">{{ post?.likes }}</p>
+                <mat-icon class="ms-3">comment</mat-icon>
+                <p class="ms-1 ps-1">{{ post?.commentNo }}</p>
+
+                <mat-icon class="ms-3">delete</mat-icon>
+              </div>
             </div>
           </div>
         </div>

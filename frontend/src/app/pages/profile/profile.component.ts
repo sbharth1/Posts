@@ -4,10 +4,11 @@ import { Component, Inject, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { catchError } from 'rxjs';
 import { Users } from '../users.model';
 import { Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-profile',
-  imports: [CommonModule],
+  imports: [CommonModule,MatIconModule],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
 })
