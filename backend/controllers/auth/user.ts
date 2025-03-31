@@ -17,11 +17,6 @@ export const user = async (req: Request, res: Response) => {
        return;
     }
 
-    if (!userPost.posts || userPost.posts.length === 0) {
-      res.status(404).json({ message: "No posts found for this user" });
-      return;
-    }
-
     res.status(200).json(userPost);
     return;
   } catch (error) {

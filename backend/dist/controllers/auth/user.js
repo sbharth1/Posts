@@ -27,10 +27,6 @@ const user = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             res.status(404).json({ message: "User not found" });
             return;
         }
-        if (!userPost.posts || userPost.posts.length === 0) {
-            res.status(404).json({ message: "No posts found for this user" });
-            return;
-        }
         res.status(200).json(userPost);
         return;
     }

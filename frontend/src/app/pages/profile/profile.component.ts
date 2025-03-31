@@ -35,7 +35,7 @@ export class ProfileComponent implements OnInit {
   toGetUserPosts() {
     const headers = { Authorization: `Bearer ${this.token}` };
 
-    this.http
+    this.http                                                 
       .get<Users>('http://localhost:3700/userpost', { headers })
       .pipe(
         catchError((error) => {
