@@ -33,10 +33,10 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-   toggleDescription(post:any): void {
-      post.isDescriptionExpanded = !post.isDescriptionExpanded;
-    }
-    
+  toggleDescription(post: any): void {
+    post.isDescriptionExpanded = !post.isDescriptionExpanded;
+  }
+
   toGetUserPosts() {
     const headers = { Authorization: `Bearer ${this.token}` };
 
@@ -54,11 +54,13 @@ export class ProfileComponent implements OnInit {
             ...response,
             posts: response.posts.map((post: any) => ({
               ...post,
-              isDescriptionExpanded: false, 
+              isDescriptionExpanded: false,
             })),
           };
         }
-        console.log('User posts:', response);
       });
+  }
+  else(error: any) {
+    console.log(error);
   }
 }

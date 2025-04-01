@@ -5,7 +5,7 @@ import { createUserSuccess, deleteUserSuccess, loadUsersSuccess } from './user.a
 export interface UserState {
   users: Users[];
   loading: boolean;
-  error: any;
+  error:any;
 }
 
 export const initialState: UserState = {

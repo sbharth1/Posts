@@ -14,7 +14,7 @@ export class Posts {
   
   export class Users {
     constructor(
-      public id:any,
+      public id:string,
       public firstName: string,
       public lastName: string,
       public email: string,
