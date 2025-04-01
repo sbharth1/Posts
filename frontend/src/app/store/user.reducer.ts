@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { loginSuccess, loginFailure, signupSuccess, signupFailure, loadPostsSuccess, loadPostsFailure, loadUserInfoSuccess, loadUserInfoFailure } from './user.action';
-import { Users } from '../../../pages/users.model';
+import { Users } from '../pages/users.model';
 
 export interface UserState {
   user: Users | null;

@@ -10,8 +10,8 @@ import {
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Store } from '@ngrx/store';
-import { login } from '../../features/user/state/user.action';
-import { selectAuthError, selectAuthToken } from '../../features/user/state/user.selectors';
+import { login } from '../../store/user.action';
+import { selectAuthError, selectAuthToken } from '../../store/user.selectors';
 
 @Component({
   selector: 'app-login',

@@ -10,9 +10,9 @@ import {
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { tokenInterceptor } from './interceptor/token/token.interceptor';
 import { provideStore } from '@ngrx/store';
-import { userReducer } from './features/user/state/user.reducer';
+import { userReducer } from './store/user.reducer';
 import { provideEffects } from '@ngrx/effects';
-import { UserEffects } from './features/user/state/user.effects';
+import { UserEffects } from './store/user.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
