@@ -9,13 +9,17 @@ import {
 } from '@angular/platform-browser';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { tokenInterceptor } from './interceptor/token/token.interceptor';
+import { provideStore } from '@ngrx/store';
+import { userReducer } from './features/user/state/user.reducer';
+import { provideEffects } from '@ngrx/effects';
+import { UserEffects } from './features/user/state/user.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
-    provideHttpClient(withInterceptors([tokenInterceptor]),withFetch()),
+    provideHttpClient(withInterceptors([tokenInterceptor]), withFetch()),
     provideAnimations(),
     provideToastr({
       timeOut: 3000,
@@ -23,5 +27,7 @@ export const appConfig: ApplicationConfig = {
       preventDuplicates: true,
       progressBar: true
     }),
+    provideStore({ user: userReducer }), 
+    provideEffects([UserEffects])
   ],
 };

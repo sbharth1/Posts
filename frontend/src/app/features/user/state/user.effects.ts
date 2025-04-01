@@ -19,7 +19,7 @@ import {
 } from './user.action';
 
 @Injectable()
-export class UserEffects {
+export class UserEffects {  
   constructor(private actions$: Actions, private apiService: ApiService) {}
 
   login$ = createEffect(() =>
