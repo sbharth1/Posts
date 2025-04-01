@@ -1,32 +1,58 @@
 import { createReducer, on } from '@ngrx/store';
+import { loginSuccess, loginFailure, signupSuccess, signupFailure, loadPostsSuccess, loadPostsFailure, loadUserInfoSuccess, loadUserInfoFailure } from './user.action';
 import { Users } from '../../../pages/users.model';
-import { createUserSuccess, deleteUserSuccess, loadUsersSuccess } from './user.action';
 
 export interface UserState {
-  users: Users[];
-  loading: boolean;
-  error:any;
+  user: Users | null;
+  posts: any[];
+  error: string | null;
+  token: string | null;
 }
 
 export const initialState: UserState = {
-  users: [],
-  loading: false,
+  user: null,
+  posts: [],
   error: null,
+  token: null,
 };
 
 export const userReducer = createReducer(
   initialState,
-  on(loadUsersSuccess, (state, { users }) => ({
+  on(loginSuccess, (state, { token, user }) => ({
     ...state,
-    users,
-    loading: false,
+    user,
+    token,
+    error: null,
   })),
-  on(createUserSuccess, (state, { user }) => ({
+  on(loginFailure, (state, { error }) => ({
     ...state,
-    users: [...state.users, user],
+    error,
   })),
-  on(deleteUserSuccess, (state, { userId }) => ({
+  on(signupSuccess, (state, { user }) => ({
     ...state,
-    users: state.users.filter(u => u.id !== userId),
+    user,
+    error: null,
+  })),
+  on(signupFailure, (state, { error }) => ({
+    ...state,
+    error,
+  })),
+  on(loadPostsSuccess, (state, { posts }) => ({
+    ...state,
+    posts,
+    error: null,
+  })),
+  on(loadPostsFailure, (state, { error }) => ({
+    ...state,
+    error,
+  })),
+  on(loadUserInfoSuccess, (state, { user }) => ({
+    ...state,
+    user,
+    error: null,
+  })),
+  on(loadUserInfoFailure, (state, { error }) => ({
+    ...state,
+    error,
   }))
 );
