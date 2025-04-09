@@ -26,6 +26,7 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs';
 import { Item } from '../item.model';
+import { subscribe } from 'node:diagnostics_channel';
 
 @Component({
   selector: 'app-posts',
@@ -72,7 +73,6 @@ export class PostsComponent implements OnInit {
   toggleDescription(item: Item): void {
     item.isDescriptionExpanded = !item.isDescriptionExpanded;
   }
-  
 
   getAllPosts() {
     this.http
@@ -85,11 +85,10 @@ export class PostsComponent implements OnInit {
       )
       .subscribe((res: any) => {
         if (res) {
-          
-          this.allItems = res.map((post:any) => ({
+          this.allItems = res.map((post: any) => ({
             ...post,
-            isDescriptionExpanded: false
-                    }));
+            isDescriptionExpanded: false,
+          }));
         } else {
           console.log('Error: No response data');
         }
@@ -108,7 +107,7 @@ export class PostsComponent implements OnInit {
         },
         (reason: any) => {
           this.closeResult.set(`Dismissed ${this.getDismissReason(reason)}`);
-          this.clearFileInput()
+          this.clearFileInput();
         }
       );
   }
@@ -127,9 +126,9 @@ export class PostsComponent implements OnInit {
   clearFileInput() {
     const fileInput = document.getElementById('fileInput') as HTMLInputElement;
     if (fileInput) {
-      fileInput.value = ''; 
+      fileInput.value = '';
     }
-  
+
     this.modalForm.reset();
     this.modalForm.patchValue({
       description: null,
@@ -154,7 +153,7 @@ export class PostsComponent implements OnInit {
       formData.append('description', this.modalForm.get('description')?.value);
       formData.append('image', this.modalForm.get('image')?.value);
       const headers = { Authorization: `Bearer ${this.token}` };
-  
+
       this.http
         .post('http://localhost:3700/posts', formData, { headers })
         .pipe(
@@ -171,10 +170,10 @@ export class PostsComponent implements OnInit {
           } else {
             console.log('Error: No response data');
           }
-        }); 
-  
+        });
+
       this.modalForm.reset();
-       this.clearFileInput();
+      this.clearFileInput();
       this.modalService.dismissAll();
     } else {
       this.toastr.error('Both fields are required..');
@@ -182,9 +181,26 @@ export class PostsComponent implements OnInit {
   }
   // end modal code ----------------------------------------
 
-
   // delete user ------------------------------------------
 
+  // like and comment -------------------------
+
+  onAddLike(id: string) {
+    const headers = { Authorization: `Bearer ${this.token}` };
+    console.log(id,'---id')
+    this.http
+      .post(`http://localhost:3700/userpost/${id}/like`, {},{ headers })
+      .pipe(
+        catchError((err) => {
+          console.log('error from like api ---- ', err);
+          return [];
+        })
+      )
+      .subscribe((res) => {
+        console.log(res, '--res from like api');
+        this.getAllPosts();
+      });
+  }
 
   // navigation code----------------------------------------
 
@@ -192,8 +208,8 @@ export class PostsComponent implements OnInit {
     this.router.navigate(['login']);
   }
 
-  navigateProfile(){
-    this.router.navigate(['profile'])
+  navigateProfile() {
+    this.router.navigate(['profile']);
   }
 
   // LogOut----------------------------------------

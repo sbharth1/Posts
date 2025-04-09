@@ -1,5 +1,6 @@
 export class Item {
     constructor(
+      public _id : string,
       public likes: number,
       public commentNo:number,
       public description: string,

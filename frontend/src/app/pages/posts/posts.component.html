@@ -1,4 +1,4 @@
-<main class="bg-dark">
+<main>
   <!-- Navbar Section -->
   <nav class="navbar">
     <div class="container-fluid">
@@ -52,7 +52,7 @@
   <div class="container mt-5">
     <div class="row d-flex justify-content-center">
       <div *ngIf="allItems.length === 0" class="col-12 text-center fs-5">
-        <p class="text-white">
+        <p>
           No posts available. Create a post to get started!
         </p>
       </div>
@@ -71,7 +71,7 @@
           </div>
           <div class="card-body">
             <div class="d-flex">
-              <mat-icon>thumb_up</mat-icon>
+              <mat-icon (click)="onAddLike(item._id)">thumb_up</mat-icon>
               <p class="ms-1 ps-1">{{ item.likes }}</p>
               <mat-icon class="ms-3">comment</mat-icon>
               <p class="ms-1 ps-1">{{ item.commentNo }}</p>

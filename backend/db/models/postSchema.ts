@@ -11,7 +11,7 @@ interface IPost extends Document {
     image: string;
     likes: number;
     commentNo: number;
-    likedBy: Schema.Types.ObjectId[];
+    likedBy: string[];
     comments: IComment[];
     user: Schema.Types.ObjectId;
 }

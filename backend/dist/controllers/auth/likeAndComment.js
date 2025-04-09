@@ -8,16 +8,38 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Like = void 0;
-const Like = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.like = void 0;
+const postSchema_1 = __importDefault(require("../../db/models/postSchema"));
+const like = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const { id } = req.params;
     const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId;
     try {
-        console.log(userId, "---userId");
-        console.log(id, "--likeid");
-        res.status(200).send({ msg: "success" });
+        if (!userId) {
+            res.status(400).send({ msg: "User not authenticated" });
+            return;
+        }
+        const post = yield postSchema_1.default.findById(id);
+        if (!post) {
+            res.status(404).send({ msg: 'Post not found' });
+            return;
+        }
+        if (post.likedBy.includes(userId)) {
+            post.likes -= 1;
+            res.status(200).send({ msg: "Post unliked successfully" });
+            return;
+        }
+        else {
+            post.likedBy.push(userId);
+            post.likes += 1;
+        }
+        yield post.save();
+        console.log(post);
+        res.status(200).send({ msg: 'Post liked successfully' });
         return;
     }
     catch (err) {
@@ -26,4 +48,4 @@ const Like = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         return;
     }
 });
-exports.Like = Like;
+exports.like = like;

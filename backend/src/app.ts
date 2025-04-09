@@ -71,15 +71,14 @@ app.post(
         user: userId,
       });
 
-
       const savedPost = await newPost.save();
 
       await User.findByIdAndUpdate(
         userId,
         {
-          $push: { posts: savedPost._id },  
+          $push: { posts: savedPost._id },
         },
-        { new: true } 
+        { new: true }
       );
 
       res

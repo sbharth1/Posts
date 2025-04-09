@@ -1,15 +1,37 @@
 import { Response, Request } from "express";
-export const Like = async(req: Request, res: Response) => {
+import Post from "../../db/models/postSchema";
+export const like = async (req: Request, res: Response) => {
   const { id } = req.params;
   const userId = req.user?.userId;
   try {
-    console.log(userId, "---userId");
-    console.log(id, "--likeid");
-     res.status(200).send({ msg: "success" });
-     return;
+    if (!userId) {
+      res.status(400).send({ msg: "User not authenticated" });
+      return;
+    }
+    const post = await Post.findById(id);
+    if (!post) {
+      res.status(404).send({ msg: "Post not found" });
+      return;
+    }
+
+    if (post.likedBy.includes(userId)) {
+      post.likes -= 1;
+      post.likedBy = post.likedBy.filter((like) => like !== userId);
+      await post.save();
+      res.status(200).send({ msg: "Post unliked successfully" });
+      return;
+    } else {
+      post.likedBy.push(userId);
+      post.likes += 1;
+      await post.save();
+    }
+    console.log(post);
+
+    res.status(200).send({ msg: "Post liked successfully" });
+    return;
   } catch (err) {
     console.log(err, "--err in backend");
-     res.status(404).send("Internal Server Error...");
-     return;
+    res.status(404).send("Internal Server Error...");
+    return;
   }
 };
