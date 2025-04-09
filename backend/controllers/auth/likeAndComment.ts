@@ -17,16 +17,15 @@ export const like = async (req: Request, res: Response) => {
     if (post.likedBy.includes(userId)) {
       post.likes -= 1;
       post.likedBy = post.likedBy.filter((like) => like !== userId);
-      await post.save();
       res.status(200).send({ msg: "Post unliked successfully" });
       return;
     } else {
       post.likedBy.push(userId);
       post.likes += 1;
-      await post.save();
     }
     console.log(post);
-
+   
+    await post.save();
     res.status(200).send({ msg: "Post liked successfully" });
     return;
   } catch (err) {
