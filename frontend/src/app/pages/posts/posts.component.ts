@@ -187,7 +187,6 @@ export class PostsComponent implements OnInit {
 
   onAddLike(id: string) {
     const headers = { Authorization: `Bearer ${this.token}` };
-    console.log(id,'---id')
     this.http
       .post(`http://localhost:3700/userpost/${id}/like`, {},{ headers })
       .pipe(

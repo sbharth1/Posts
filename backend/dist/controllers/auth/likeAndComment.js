@@ -18,33 +18,47 @@ const like = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const { id } = req.params;
     const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId;
-    try {
-        if (!userId) {
-            res.status(400).send({ msg: "User not authenticated" });
-            return;
-        }
-        const post = yield postSchema_1.default.findById(id);
-        if (!post) {
-            res.status(404).send({ msg: 'Post not found' });
-            return;
-        }
-        if (post.likedBy.includes(userId)) {
-            post.likes -= 1;
-            res.status(200).send({ msg: "Post unliked successfully" });
-            return;
-        }
-        else {
-            post.likedBy.push(userId);
-            post.likes += 1;
-        }
-        yield post.save();
-        console.log(post);
-        res.status(200).send({ msg: 'Post liked successfully' });
+    if (!userId) {
+        res.status(401).send({ msg: "User not authenticated" });
         return;
     }
+    try {
+        const post = yield postSchema_1.default.findById(id);
+        if (!post) {
+            res.status(404).send({ msg: "Post not found" });
+            return;
+        }
+        const hasLiked = post.likedBy.includes(userId);
+        if (hasLiked) {
+            if (post.likes > 0) {
+                post.likes -= 1;
+                post.likedBy = post.likedBy.filter((id) => id != userId);
+                yield post.save();
+                res.status(200).send({ msg: "Post unliked successfully" });
+                return;
+            }
+            else {
+                res.status(400).send({ msg: "Cannot unlike, likes already at zero" });
+                return;
+            }
+        }
+        else {
+            if (post.likes >= 0) {
+                post.likes += 1;
+                post.likedBy.push(userId);
+                yield post.save();
+            }
+            else {
+                res.status(400).send({ msg: "Cannot like, likes not at zero" });
+                return;
+            }
+            res.status(200).send({ msg: "Post liked successfully" });
+            return;
+        }
+    }
     catch (err) {
-        console.log(err, "--err in backend");
-        res.status(404).send("Internal Server Error...");
+        console.error(err, "-- Error in like controller");
+        res.status(500).send({ msg: "Internal Server Error" });
         return;
     }
 });
