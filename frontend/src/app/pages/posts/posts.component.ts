@@ -26,7 +26,6 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs';
 import { Item } from '../item.model';
-import { subscribe } from 'node:diagnostics_channel';
 
 @Component({
   selector: 'app-posts',
@@ -181,10 +180,8 @@ export class PostsComponent implements OnInit {
   }
   // end modal code ----------------------------------------
 
-  // delete user ------------------------------------------
 
   // like and comment -------------------------
-
   onAddLike(id: string) {
     const headers = { Authorization: `Bearer ${this.token}` };
     this.http

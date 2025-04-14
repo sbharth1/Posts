@@ -18,4 +18,6 @@ router.post("/login",login);
 router.post("/signup",signup);
 router.post("/userpost/:id/like",verifyToken,like)
 
+// post delete 
+router.delete("/userdelte/:id/delete")
 export = router;

@@ -62,7 +62,7 @@
                 <mat-icon class="ms-3">comment</mat-icon>
                 <p class="ms-1 ps-1">{{ post?.commentNo }}</p>
 
-                <mat-icon class="ms-3">delete</mat-icon>
+                <mat-icon class="ms-3" (click)="onDeletePost()">delete</mat-icon>
               </div>
               <div class="description-div">
                 <p
