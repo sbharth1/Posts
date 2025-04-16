@@ -5,6 +5,7 @@ import { getPosts } from '../controllers/auth/posts';
 import { user } from '../controllers/auth/user';
 import { verifyToken } from '../utils/jwt';
 import { like } from '../controllers/auth/likeAndComment';
+import { deleteUser } from '../controllers/auth/delete';
 
 
 const router = Router();
@@ -19,5 +20,5 @@ router.post("/signup",signup);
 router.post("/userpost/:id/like",verifyToken,like)
 
 // post delete 
-router.delete("/userdelete/:id/delete")
+router.delete("/userdelete/:id/delete",deleteUser)
 export = router;

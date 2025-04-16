@@ -5,6 +5,7 @@ import { catchError } from 'rxjs';
 import { Users } from '../users.model';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { response } from 'express';
 
 @Component({
   selector: 'app-profile',
@@ -64,11 +65,23 @@ export class ProfileComponent implements OnInit {
     console.log(error);
   }
 
+  // deletePosts -----------------------------
 
-// deletePosts -----------------------------
+  onDeletePost(id: string): void {
+    const headers = { Authorization: `Bearer ${this.token}` };
 
-onDeletePost(id:string):void {
-  console.log('hello',id)
-}
-
+    this.http
+      .delete(`http://localhost:3700/userdelete/${id}/delete`, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error while deleting user posts:', error);
+          return [];
+        })
+      )
+      .subscribe((response) => {
+        if (response) {
+         console.log(response)
+        }
+      });
+  }
 }
