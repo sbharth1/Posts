@@ -14,4 +14,6 @@ router.get("/userpost", jwt_1.verifyToken, user_1.user);
 router.post("/login", login_1.login);
 router.post("/signup", signup_1.signup);
 router.post("/userpost/:id/like", jwt_1.verifyToken, likeAndComment_1.like);
+// post delete 
+router.delete("/userdelete/:id/delete");
 module.exports = router;

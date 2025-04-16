@@ -19,5 +19,5 @@ router.post("/signup",signup);
 router.post("/userpost/:id/like",verifyToken,like)
 
 // post delete 
-router.delete("/userdelte/:id/delete")
+router.delete("/userdelete/:id/delete")
 export = router;

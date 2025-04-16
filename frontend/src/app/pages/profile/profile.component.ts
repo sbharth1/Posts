@@ -63,4 +63,12 @@ export class ProfileComponent implements OnInit {
   else(error: any) {
     console.log(error);
   }
+
+
+// deletePosts -----------------------------
+
+onDeletePost(id:string):void {
+  console.log('hello',id)
+}
+
 }
