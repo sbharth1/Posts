@@ -1,5 +1,10 @@
 "use strict";
 const mongoose_1 = require("mongoose");
+const commentSchema = new mongoose_1.Schema({
+    text: { type: String, required: true },
+    created: { type: Date, default: Date.now },
+    commentedBy: { type: mongoose_1.Schema.Types.ObjectId, ref: 'User' },
+});
 const postSchema = new mongoose_1.Schema({
     description: {
         type: String,
@@ -21,21 +26,7 @@ const postSchema = new mongoose_1.Schema({
         type: Number,
         default: 0,
     },
-    comments: [{
-            text: {
-                type: String,
-                required: true,
-            },
-            created: {
-                type: Date,
-                default: Date.now,
-            },
-            commentedBy: {
-                type: mongoose_1.Schema.Types.ObjectId,
-                ref: 'User',
-                required: true,
-            },
-        }],
+    comments: [commentSchema],
     user: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: 'User',

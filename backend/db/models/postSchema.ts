@@ -1,9 +1,9 @@
 import { Schema, model, Document } from 'mongoose';
 
 interface IComment {
-    text: string;
+    text: any;
     created: Date;
-    commentedBy: Schema.Types.ObjectId;
+    commentedBy:any;
 }
 
 interface IPost extends Document {
@@ -15,6 +15,13 @@ interface IPost extends Document {
     comments: IComment[];
     user: Schema.Types.ObjectId;
 }
+
+const commentSchema = new Schema({
+  text: { type: String, required: true },
+  created: { type: Date, default: Date.now },
+  commentedBy: { type: Schema.Types.ObjectId, ref: 'User' },
+});
+
 
 const postSchema = new Schema<IPost>(
   {
@@ -38,21 +45,7 @@ const postSchema = new Schema<IPost>(
       type: Number,
       default: 0,
     },
-    comments: [{
-      text: {
-        type: String,
-        required: true,
-      },
-      created: {
-        type: Date,
-        default: Date.now,
-      },
-      commentedBy: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
-      },
-    }],
+    comments: [commentSchema],
     user: {
       type: Schema.Types.ObjectId,
       ref: 'User',

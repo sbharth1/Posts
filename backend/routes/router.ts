@@ -18,7 +18,7 @@ router.get("/userpost",verifyToken,user)
 router.post("/login",login);
 router.post("/signup",signup);
 router.post("/userpost/:id/like",verifyToken,like)
-router.post("/userpost/:id/comment",comments)
+router.post("/userpost/:id/comment",verifyToken,comments)
 
 // post delete 
 router.delete("/userpost/:id/delete",deleteUser)

@@ -63,9 +63,38 @@ const like = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.like = like;
-const comments = (req, res) => {
+// comments -----------------
+const comments = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
+        const { id } = req.params;
+        const { comment } = req.body;
+        const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId;
+        if (!userId) {
+            res.status(401).json({ message: "User not authenticated" });
+            return;
+        }
+        const post = yield postSchema_1.default.findOneAndUpdate({ _id: id });
+        if (!post) {
+            res.status(404).json({ message: "Post not found" });
+            return;
+        }
+        const newComment = {
+            text: comment,
+            created: new Date(),
+            commentedBy: userId,
+        };
+        post.comments.push(newComment);
+        yield post.save();
+        res.status(200).json({
+            message: "Comment added successfully",
+        });
+        return;
     }
-    catch (err) { }
-};
+    catch (err) {
+        console.error("Error adding comment:", err);
+        res.status(500).json({ message: "Server error" });
+        return;
+    }
+});
 exports.comments = comments;

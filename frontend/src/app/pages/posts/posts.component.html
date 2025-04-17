@@ -88,7 +88,7 @@
                 <div class="mt-2 d-flex justify-content-end">
                   <button
                     class="btn btn-primary me-2"
-                    (click)="submitComment(item._id, item.newComment)"
+                    (click)="submitComment(item._id, item.newComment!)"
                   >
                     Comment
                   </button>
@@ -98,7 +98,7 @@
                 </div>
               </div>
 
-              <!-- -------------------------- -->
+              <!-- ---------------------------->
             </div>
             <div class="content">
               <p
@@ -118,6 +118,11 @@
               >
                 {{ item.isDescriptionExpanded ? "Show Less" : "Show More" }}
               </button>
+            </div>
+            <!-- show comments  -->
+             <hr/>
+            <div class="showcomments">
+            <div class="d-flex justify-content-between">comments <span>▼</span></div>
             </div>
           </div>
         </div>

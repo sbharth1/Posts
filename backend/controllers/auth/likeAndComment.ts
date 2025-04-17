@@ -22,7 +22,7 @@ export const like = async (req: Request, res: Response) => {
     if (hasLiked) {
       if (post.likes > 0) {
         post.likes -= 1;
-        post.likedBy = post.likedBy.filter((id)=> id != userId);
+        post.likedBy = post.likedBy.filter((id) => id != userId);
         await post.save();
         res.status(200).send({ msg: "Post unliked successfully" });
         return;
@@ -49,9 +49,44 @@ export const like = async (req: Request, res: Response) => {
   }
 };
 
+// comments -----------------
 
-export const comments = (req: Request, res: Response) => {
+export const comments = async (req: Request, res: Response) => {
   try {
-  } catch (err) {}
-};
+    const { id } = req.params;
+    const { comment } = req.body;
+    const userId = req.user?.userId;
 
+    if (!userId) {
+      res.status(401).json({ message: "User not authenticated" });
+      return;
+    }
+
+    const post = await Post.findOneAndUpdate({_id:id});
+    if (!post) {
+      res.status(404).json({ message: "Post not found" });
+      return;
+    }
+
+    const newComment = {
+      text: comment,
+      created: new Date(),
+      commentedBy: userId,
+    };
+
+    post.comments.push(newComment);
+
+    
+
+    await post.save();
+
+    res.status(200).json({
+      message: "Comment added successfully",
+    });
+    return;
+  } catch (err) {
+    console.error("Error adding comment:", err);
+    res.status(500).json({ message: "Server error" });
+    return;
+  }
+};

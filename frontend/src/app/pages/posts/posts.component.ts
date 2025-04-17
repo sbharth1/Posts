@@ -58,7 +58,6 @@ export class PostsComponent implements OnInit {
   allItems: Item[] = [];
   commentingPostId: string | null = null;
 
-
   ngOnInit(): void {
     this.getAllPosts(); // to get all posts
 
@@ -184,12 +183,11 @@ export class PostsComponent implements OnInit {
   }
   // end modal code ----------------------------------------
 
-
   // like and comment -------------------------
   onAddLike(id: string) {
     const headers = { Authorization: `Bearer ${this.token}` };
     this.http
-      .post(`http://localhost:3700/userpost/${id}/like`, {},{ headers })
+      .post(`http://localhost:3700/userpost/${id}/like`, {}, { headers })
       .pipe(
         catchError((err) => {
           return of(null);
@@ -201,40 +199,45 @@ export class PostsComponent implements OnInit {
       });
   }
 
+  // commmet section  --------------------
 
-    // commmet section  --------------------
-
-    onAddComment(id:string):void{
-      this.commentingPostId = id;
+  onAddComment(id: string): void {
+    this.commentingPostId = id;
+    const post = this.allItems.find((item) => item._id === id);
+    if (post) {
+      post.newComment = ''; 
     }
+  }
 
-    submitComment(id: string, comment: string): void {
-      if (!comment || !comment.trim()) {
-        this.toastr.error('Comment cannot be empty');
-        return;
-      }
-    
-      const headers = { Authorization: `Bearer ${this.token}` };
-      this.http
-        .post(`http://localhost:3700/userpost/${id}/comment`, { comment }, { headers })
-        .pipe(
-          catchError((err) => {
-            this.toastr.error('Failed to add comment');
-            console.error(err);
-            return [];
-          })
-        )
-        .subscribe((res: any) => {
-          this.toastr.success('Comment added successfully');
-          this.getAllPosts();
-          this.commentingPostId = null;
-        });
+  submitComment(postId: string, comment?: string) {
+    if (!comment || comment.trim() === '') {
+      console.warn('Comment is empty or undefined.');
+      return;
     }
-    
-    cancelComment(): void {
-      this.commentingPostId = null;
-    }
+    const headers = { Authorization: `Bearer ${this.token}` };
 
+    this.http
+      .post(
+        `http://localhost:3700/userpost/${postId}/comment`,
+        { comment },
+        { headers }
+      )
+      .pipe(
+        catchError((err) => {
+          return of(err);
+        })
+      )
+      .subscribe((res: any) => {
+        this.toastr.success('comment successfully...');
+        console.log(res, '-------------res');
+        this.commentingPostId = null;
+        comment = "";
+      });
+  }
+
+  cancelComment(): void {
+    this.commentingPostId = null;
+  }
 
   // navigation code----------------------------------------
 
