@@ -72,7 +72,7 @@ export class ProfileComponent implements OnInit {
     const headers = { Authorization: `Bearer ${this.token}` };
 
     this.http
-      .delete(`http://localhost:3700/userdelete/${id}/delete`, { headers })
+      .delete(`http://localhost:3700/userpost/${id}/delete`, { headers })
       .pipe(
         catchError((error) => {
           console.error('Error while deleting user posts:', error);

@@ -24,7 +24,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!email || !password) {
             res.status(400).json({
                 success: false,
-                message: 'Both fields are required',
+                message: "Both fields are required",
             });
             return;
         }
@@ -32,14 +32,14 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!user) {
             res.status(404).json({
                 success: false,
-                message: 'User not found',
+                message: "User not found",
             });
             return;
         }
         if (!user.password) {
             res.status(401).json({
                 success: false,
-                message: 'Invalid password',
+                message: "Invalid password",
             });
             return;
         }
@@ -47,14 +47,14 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!isPasswordCorrect) {
             res.status(401).json({
                 success: false,
-                message: 'Invalid password',
+                message: "Invalid password",
             });
             return;
         }
         const token = (0, jwt_1.generateToken)(user._id.toString());
         res.status(200).json({
             success: true,
-            message: 'Login successful',
+            message: "Login successful",
             token,
             data: {
                 userId: user._id,
@@ -67,7 +67,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         console.error(err);
         res.status(500).json({
             success: false,
-            message: 'Internal Server Error',
+            message: "Internal Server Error",
         });
         return;
     }

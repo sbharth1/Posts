@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.like = void 0;
+exports.comments = exports.like = void 0;
 const postSchema_1 = __importDefault(require("../../db/models/postSchema"));
 const like = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
@@ -63,3 +63,9 @@ const like = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.like = like;
+const comments = (req, res) => {
+    try {
+    }
+    catch (err) { }
+};
+exports.comments = comments;

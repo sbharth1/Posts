@@ -52,9 +52,7 @@
   <div class="container mt-5">
     <div class="row d-flex justify-content-center">
       <div *ngIf="allItems.length === 0" class="col-12 text-center fs-5">
-        <p>
-          No posts available. Create a post to get started!
-        </p>
+        <p>No posts available. Create a post to get started!</p>
       </div>
 
       <!-- Post Card Loop -->
@@ -73,24 +71,54 @@
             <div class="d-flex">
               <mat-icon (click)="onAddLike(item._id)">thumb_up</mat-icon>
               <p class="ms-1 ps-1">{{ item.likes }}</p>
-              <mat-icon class="ms-3" (click)="onAddComment(item._id)">comment</mat-icon>
+              <mat-icon class="ms-3" (click)="onAddComment(item._id)"
+                >comment</mat-icon
+              >
               <p class="ms-1 ps-1">{{ item.commentNo }}</p>
+
+              <!-- comment sectoin  -->
+
+              <div *ngIf="commentingPostId === item._id" class="mt-2 ms-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="item.newComment"
+                  placeholder="Write a comment..."
+                />
+                <div class="mt-2 d-flex justify-content-end">
+                  <button
+                    class="btn btn-primary me-2"
+                    (click)="submitComment(item._id, item.newComment)"
+                  >
+                    Comment
+                  </button>
+                  <button class="btn btn-secondary" (click)="cancelComment()">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+
+              <!-- -------------------------- -->
             </div>
             <div class="content">
-            <p class="card-text" *ngIf="!item.isDescriptionExpanded" [class.truncated-text]="!item.isDescriptionExpanded">
-              {{ item.description }}
-            </p>
-            <p class="card-text" *ngIf="item.isDescriptionExpanded">
-              {{ item.description }}
-            </p>
-            <button
-              *ngIf="item.description.length > 100"
-              (click)="toggleDescription(item)"
-              class="btn btn-link text-primary"
-            >
-              {{ item.isDescriptionExpanded ? "Show Less" : "Show More" }}
-            </button>
-          </div>
+              <p
+                class="card-text"
+                *ngIf="!item.isDescriptionExpanded"
+                [class.truncated-text]="!item.isDescriptionExpanded"
+              >
+                {{ item.description }}
+              </p>
+              <p class="card-text" *ngIf="item.isDescriptionExpanded">
+                {{ item.description }}
+              </p>
+              <button
+                *ngIf="item.description.length > 100"
+                (click)="toggleDescription(item)"
+                class="btn btn-link text-primary"
+              >
+                {{ item.isDescriptionExpanded ? "Show Less" : "Show More" }}
+              </button>
+            </div>
           </div>
         </div>
       </div>

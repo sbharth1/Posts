@@ -4,7 +4,7 @@ import { signup } from '../controllers/auth/signup';
 import { getPosts } from '../controllers/auth/posts';
 import { user } from '../controllers/auth/user';
 import { verifyToken } from '../utils/jwt';
-import { like } from '../controllers/auth/likeAndComment';
+import { comments, like } from '../controllers/auth/likeAndComment';
 import { deleteUser } from '../controllers/auth/delete';
 
 
@@ -18,8 +18,9 @@ router.get("/userpost",verifyToken,user)
 router.post("/login",login);
 router.post("/signup",signup);
 router.post("/userpost/:id/like",verifyToken,like)
+router.post("/userpost/:id/comment",comments)
 
 // post delete 
-router.delete("/userdelete/:id/delete",deleteUser)
+router.delete("/userpost/:id/delete",deleteUser)
 
 export = router;

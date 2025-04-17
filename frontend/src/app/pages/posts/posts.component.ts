@@ -22,9 +22,10 @@ import {
   FormBuilder,
   Validators,
   FormGroup,
+  FormsModule,
 } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { catchError } from 'rxjs';
+import { catchError, of } from 'rxjs';
 import { Item } from '../item.model';
 
 @Component({
@@ -34,6 +35,7 @@ import { Item } from '../item.model';
     MatIconModule,
     NgbDatepickerModule,
     ReactiveFormsModule,
+    FormsModule,
   ],
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.scss'],
@@ -54,6 +56,8 @@ export class PostsComponent implements OnInit {
   closeResult: WritableSignal<string> = signal('');
 
   allItems: Item[] = [];
+  commentingPostId: string | null = null;
+
 
   ngOnInit(): void {
     this.getAllPosts(); // to get all posts
@@ -188,8 +192,7 @@ export class PostsComponent implements OnInit {
       .post(`http://localhost:3700/userpost/${id}/like`, {},{ headers })
       .pipe(
         catchError((err) => {
-          console.log('error from like api ---- ', err);
-          return [];
+          return of(null);
         })
       )
       .subscribe((res) => {
@@ -202,7 +205,34 @@ export class PostsComponent implements OnInit {
     // commmet section  --------------------
 
     onAddComment(id:string):void{
-     console.log(id)
+      this.commentingPostId = id;
+    }
+
+    submitComment(id: string, comment: string): void {
+      if (!comment || !comment.trim()) {
+        this.toastr.error('Comment cannot be empty');
+        return;
+      }
+    
+      const headers = { Authorization: `Bearer ${this.token}` };
+      this.http
+        .post(`http://localhost:3700/userpost/${id}/comment`, { comment }, { headers })
+        .pipe(
+          catchError((err) => {
+            this.toastr.error('Failed to add comment');
+            console.error(err);
+            return [];
+          })
+        )
+        .subscribe((res: any) => {
+          this.toastr.success('Comment added successfully');
+          this.getAllPosts();
+          this.commentingPostId = null;
+        });
+    }
+    
+    cancelComment(): void {
+      this.commentingPostId = null;
     }
 
 

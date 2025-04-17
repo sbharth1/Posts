@@ -5,6 +5,7 @@ export class Item {
       public commentNo:number,
       public description: string,
       public image : string,
+      public newComment:string,
       public isDescriptionExpanded : boolean
     ) {}
   }
