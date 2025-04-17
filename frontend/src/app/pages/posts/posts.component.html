@@ -2,7 +2,7 @@
   <!-- Navbar Section -->
   <nav class="navbar">
     <div class="container-fluid">
-      <a class="navbar-brand fw-bold text-white" href="#">Navbar</a>
+      <a class="navbar-brand fw-bold text-white" href="#">Posts</a>
       <form class="d-flex" role="search">
         <input
           class="form-control me-2"
@@ -73,7 +73,7 @@
             <div class="d-flex">
               <mat-icon (click)="onAddLike(item._id)">thumb_up</mat-icon>
               <p class="ms-1 ps-1">{{ item.likes }}</p>
-              <mat-icon class="ms-3">comment</mat-icon>
+              <mat-icon class="ms-3" (click)="onAddComment(item._id)">comment</mat-icon>
               <p class="ms-1 ps-1">{{ item.commentNo }}</p>
             </div>
             <div class="content">

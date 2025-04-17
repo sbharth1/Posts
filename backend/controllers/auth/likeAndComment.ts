@@ -48,3 +48,10 @@ export const like = async (req: Request, res: Response) => {
     return;
   }
 };
+
+
+export const comments = (req: Request, res: Response) => {
+  try {
+  } catch (err) {}
+};
+

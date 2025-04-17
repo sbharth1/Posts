@@ -198,6 +198,14 @@ export class PostsComponent implements OnInit {
       });
   }
 
+
+    // commmet section  --------------------
+
+    onAddComment(id:string):void{
+     console.log(id)
+    }
+
+
   // navigation code----------------------------------------
 
   navigateToSignIn() {
