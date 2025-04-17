@@ -1,11 +1,11 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { catchError } from 'rxjs';
+import { catchError, of } from 'rxjs';
 import { Users } from '../users.model';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { response } from 'express';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile',
@@ -20,7 +20,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    private router: Router
+    private router: Router,
+    private toastr:ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -46,7 +47,7 @@ export class ProfileComponent implements OnInit {
       .pipe(
         catchError((error) => {
           console.error('Error fetching user posts:', error);
-          return [];
+          return of(null);
         })
       )
       .subscribe((response) => {
@@ -75,12 +76,13 @@ export class ProfileComponent implements OnInit {
       .pipe(
         catchError((error) => {
           console.error('Error while deleting user posts:', error);
-          return [];
+          return of(null);
         })
       )
-      .subscribe((response) => {
+      .subscribe((response:any) => {
         if (response) {
-         console.log(response)
+          this.toGetUserPosts();
+         this.toastr.success(response.msg)
         }
       });
   }

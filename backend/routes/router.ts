@@ -21,4 +21,5 @@ router.post("/userpost/:id/like",verifyToken,like)
 
 // post delete 
 router.delete("/userdelete/:id/delete",deleteUser)
+
 export = router;
