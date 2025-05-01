@@ -6,6 +6,7 @@ import { Users } from '../users.model';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { ToastrService } from 'ngx-toastr';
+import { enviroment } from '../../enviroments/enviroment.development';
 
 @Component({
   selector: 'app-profile',
@@ -43,7 +44,7 @@ export class ProfileComponent implements OnInit {
     const headers = { Authorization: `Bearer ${this.token}` };
 
     this.http
-      .get<Users>('http://localhost:3700/userpost', { headers })
+      .get<Users>(`${enviroment.apiUrl}/userpost`, { headers })
       .pipe(
         catchError((error) => {
           console.error('Error fetching user posts:', error);
@@ -72,7 +73,7 @@ export class ProfileComponent implements OnInit {
     const headers = { Authorization: `Bearer ${this.token}` };
 
     this.http
-      .delete(`http://localhost:3700/userpost/${id}/delete`, { headers })
+      .delete(`${enviroment.apiUrl}/userpost/${id}/delete`, { headers })
       .pipe(
         catchError((error) => {
           console.error('Error while deleting user posts:', error);
