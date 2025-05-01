@@ -54,6 +54,7 @@ export class PostsComponent implements OnInit {
   ) {}
 
   closeResult: WritableSignal<string> = signal('');
+  iconSwap:boolean = false;
 
   allItems: Item[] = [];
   commentingPostId: string | null = null;
@@ -205,7 +206,7 @@ export class PostsComponent implements OnInit {
     this.commentingPostId = id;
     const post = this.allItems.find((item) => item._id === id);
     if (post) {
-      post.newComment = ''; 
+      post.newComment = '';
     }
   }
 
@@ -229,14 +230,20 @@ export class PostsComponent implements OnInit {
       )
       .subscribe((res: any) => {
         this.toastr.success('comment successfully...');
-        console.log(res, '-------------res');
-        this.commentingPostId = null;
-        comment = "";
+          this.commentingPostId = null;
+        comment = '';
+        this.getAllPosts();
       });
   }
 
   cancelComment(): void {
     this.commentingPostId = null;
+  }
+
+  // onScrollComments -----------------------------------
+  onScrollComment(){
+    this.iconSwap = !this.iconSwap;
+    console.log(this.iconSwap)
   }
 
   // navigation code----------------------------------------

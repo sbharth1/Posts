@@ -38,3 +38,15 @@ img {
   text-overflow: ellipsis;
   max-width: 200px; 
 }
+
+.commentuserprofile{
+  width: 30px;
+  height:30px;
+  border-radius: 50%;
+  background-color: #0d6efd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: 700;
+}

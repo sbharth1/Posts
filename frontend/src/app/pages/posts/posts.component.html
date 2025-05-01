@@ -90,8 +90,8 @@
                     class="btn btn-primary me-2"
                     (click)="submitComment(item._id, item.newComment!)"
                   >
-                    Comment
-                  </button>
+                    Comment</button
+                  >/home/sid/code/angular/post
                   <button class="btn btn-secondary" (click)="cancelComment()">
                     Cancel
                   </button>
@@ -120,9 +120,25 @@
               </button>
             </div>
             <!-- show comments  -->
-             <hr/>
-            <div class="showcomments">
-            <div class="d-flex justify-content-between">comments <span>▼</span></div>
+            <hr />
+            <div style="height: fit-content">
+              <div class="d-flex justify-content-between">
+                comments
+                <span
+                  (click)="onScrollComment()"
+                  class="pe-2 ps-2 p-1"
+                  >{{iconSwap ? "▲" :"▼" }}</span
+                >
+              </div>
+              <div
+                class="allcomments"
+                *ngFor="let val of item.comments; let i = index"
+              >
+                <div class="d-flex mt-2" *ngIf="iconSwap === true">
+                  <span class="commentuserprofile">{{ val.text[0] }}</span>
+                  <span class="ms-3">{{ val.text }}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
