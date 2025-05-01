@@ -34,7 +34,7 @@ const like = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 post.likes -= 1;
                 post.likedBy = post.likedBy.filter((id) => id != userId);
                 yield post.save();
-                res.status(200).send({ msg: "Post unliked successfully" });
+                res.status(200).send({ msg: "Post unliked successfully", ok: false });
                 return;
             }
             else {
@@ -52,7 +52,7 @@ const like = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 res.status(400).send({ msg: "Cannot like, likes not at zero" });
                 return;
             }
-            res.status(200).send({ msg: "Post liked successfully" });
+            res.status(200).send({ msg: "Post liked successfully", ok: true });
             return;
         }
     }
@@ -88,6 +88,7 @@ const comments = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         yield post.save();
         res.status(200).json({
             message: "Comment added successfully",
+            ok: true,
         });
         return;
     }

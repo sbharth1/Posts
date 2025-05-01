@@ -54,7 +54,7 @@ export class PostsComponent implements OnInit {
   ) {}
 
   closeResult: WritableSignal<string> = signal('');
-  iconSwap:boolean = false;
+  iconSwap: boolean = false;
 
   allItems: Item[] = [];
   commentingPostId: string | null = null;
@@ -195,7 +195,9 @@ export class PostsComponent implements OnInit {
         })
       )
       .subscribe((res) => {
-        console.log(res, '--res from like api');
+        if(!res){
+          this.toastr.error('user not authorized...')
+        }
         this.getAllPosts();
       });
   }
@@ -229,11 +231,15 @@ export class PostsComponent implements OnInit {
         })
       )
       .subscribe((res: any) => {
+        if (!res.ok) {
+          this.toastr.error('user not authorized...');
+        }else{
         this.toastr.success('comment successfully...');
-          this.commentingPostId = null;
+        this.commentingPostId = null;
         comment = '';
         this.getAllPosts();
-      });
+      }
+    });
   }
 
   cancelComment(): void {
@@ -241,9 +247,9 @@ export class PostsComponent implements OnInit {
   }
 
   // onScrollComments -----------------------------------
-  onScrollComment(){
+  onScrollComment() {
     this.iconSwap = !this.iconSwap;
-    console.log(this.iconSwap)
+    console.log(this.iconSwap);
   }
 
   // navigation code----------------------------------------
