@@ -10,7 +10,7 @@ import {
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs';
-import { enviroment } from '../../enviroments/enviroment.development';
+import { environment } from '../../environments/environment.development';
 
 @Component({
   imports: [ReactiveFormsModule, CommonModule],
@@ -40,7 +40,7 @@ export class SignupComponent implements OnInit {
         this.isLoading = true;
         const formData = this.myForm.value;
         this.http
-          .post(`${enviroment.apiUrl}/signup`,formData)
+          .post(`${environment.apiUrl}/signup`,formData)
           .pipe(
             catchError((error) => {
               this.isLoading = false;

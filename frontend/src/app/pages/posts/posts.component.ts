@@ -7,7 +7,7 @@ import {
   WritableSignal,
   signal,
 } from '@angular/core';
-import { enviroment } from '../../enviroments/enviroment.development';
+import { environment } from '../../environments/environment.development';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -80,7 +80,7 @@ export class PostsComponent implements OnInit {
 
   getAllPosts() {
     this.http
-      .get(`${enviroment.apiUrl}/getposts`)
+      .get(`${environment.apiUrl}/getposts`)
       .pipe(
         catchError((error) => {
           console.error('Error fetching posts', error);
@@ -159,7 +159,7 @@ export class PostsComponent implements OnInit {
       const headers = { Authorization: `Bearer ${this.token}` };
 
       this.http
-        .post(`${enviroment.apiUrl}/posts`, formData, { headers })
+        .post(`${environment.apiUrl}/posts`, formData, { headers })
         .pipe(
           catchError((error) => {
             this.toastr.error('Post failed pls login user...');
@@ -189,7 +189,7 @@ export class PostsComponent implements OnInit {
   onAddLike(id: string) {
     const headers = { Authorization: `Bearer ${this.token}` };
     this.http
-      .post(`${enviroment.apiUrl}/userpost/${id}/like`, {}, { headers })
+      .post(`${environment.apiUrl}/userpost/${id}/like`, {}, { headers })
       .pipe(
         catchError((err) => {
           return of(null);
@@ -222,7 +222,7 @@ export class PostsComponent implements OnInit {
 
     this.http
       .post(
-        `${enviroment.apiUrl}/userpost/${postId}/comment`,
+        `${environment.apiUrl}/userpost/${postId}/comment`,
         { comment },
         { headers }
       )
